@@ -1,2 +1,2 @@
-# jido yey
+# jido YEY!
 YEY! JIDODA!
