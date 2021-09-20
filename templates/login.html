@@ -2,15 +2,29 @@
 {% block title %}Login{% endblock title %}
 {% block body %}
 
-<h1>Login Using GitHub</h1>
+<div class="slate-container">
+    <div class="flex-row row-responsive">
+        <div class="flex-object">
+            SIGN IN
+            
+            <div class="signin-container">
+                <input type="text" name="username" id="username" placeholder="Username"><br>
+                <input type="password" name="password" id="password" placeholder="Password"><br>
+            </div>
 
-{{user}}
-<br>
-<br>
-<a href="">GitHub</a><br>
-<a href="">Google</a>
+        </div>
+        
+        
+        
+        
+        <hr style="height: 70vh;">
+        <div class="flex-object flex-grow fnt-med">SIGNUP</div>
 
-<br><br>
-<a href="/accounts/logout">Logout</a>
+
+    </div>
+    
+</div>
+
+
 
 {% endblock body %}
