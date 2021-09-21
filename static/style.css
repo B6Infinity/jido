@@ -340,6 +340,26 @@ button {
     display: inline-block;
 }
 
+
+
+.signin-parent-container:hover{
+    /* border: 1px solid salmon; */
+    padding: 13px;
+}
+.signin-parent-container{
+    border-radius: 5px;
+    transition: 0.2s;
+    height: 100%;
+}
+
+
+
+
+
+
+
+
+
 /* FOR PHONES */
 
 @media only screen and (max-device-width: 640px) {
