@@ -5,43 +5,51 @@
 <div class="slate-container">
     <div class="flex-row row-responsive">
         <div class="flex-object">
-            <div class="fnt-med">SIGN IN</div>
+            <div class="fnt-med noselect">SIGN IN</div>
 
             <br><br>
-            <div class="signin-container">
+            <div class="signin-container noselect">
 
                 <form action="/handlelogin" method="post">
 
                     {% csrf_token %}
 
                     <input type="text" name="username" id="username" placeholder="Username"><br><br>
+
                     <div style="position: relative;">
                         <input type="password" name="login_password" id="login_password" placeholder="Password">
                         <div class="tooltip">
                             <div class="tooltiptext">Show Password</div>
                             <img onclick="togglePasswordView(document.getElementById('login_password'), this)"
-                            
-                            id="showloginpasswordbtn"
-                            style="width: 15px; position: absolute; bottom: -30px; right: 10px;"
-                            src="https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png" />
+                                id="showloginpasswordbtn"
+                                style="width: 15px; position: absolute; bottom: -30px; right: 10px;"
+                                src="https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png" />
                         </div>
                     </div>
+                    <br>
+                    <button style="margin-left: 0" type="button">LOGIN</button>
 
                 </form>
-
-
+                <br>
+                <h5>OR</h5>
+                <br>
+                <div class="social_login orange_neon" style="background-color: #171515;">
+                    Login Using GitHub
+                    <img src="https://img.icons8.com/ios-glyphs/50/ffffff/github.png" style="float: right;">
+                </div>
 
                 <script> // UI Scripting
                     function togglePasswordView(inpobj, eye) {
 
-                        if (inpobj.type == 'password'){
+                        if (inpobj.type == 'password') {
                             inpobj.type = 'text'; // Open Eye
-                            eye.src = "https://img.icons8.com/fluency-systems-filled/48/ffffff/visible.png";
-                        }else{
+                            eye.src = "https://img.icons8.com/fluency-systems-filled/48/ee4036/visible.png";
+                        } else {
                             inpobj.type = 'password'; // Closed Eye
                             eye.src = "https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png";
                         }
                     }
+
                 </script>
             </div>
 
@@ -53,6 +61,36 @@
         <hr style="height: 70vh;">
         <div class="flex-object flex-grow">
             <div class="fnt-med">SIGN UP</div>
+
+
+            <div class="signin-container noselect">
+
+                <form action="/handlelogin" method="post">
+
+                    {% csrf_token %}
+
+                    <input style="width: 90%;" type="text" name="username" id="username" autocomplete="off" placeholder="Username"><br><br>
+                    <input style="width: 90%;" type="text" name="first_name" id="first_name" autocomplete="off" placeholder="Display Name"><br><br>
+                    <input style="width: 90%;" type="email" name="email" id="email" autocomplete="off" placeholder="E-mail"><br><br>
+
+                    <div style="position: relative;">
+                        <input style="width: 90%;" type="password" name="signup_password" id="signup_password" placeholder="Password">
+                        <div class="tooltip">
+                            <div class="tooltiptext">Show Password</div>
+                            <img onclick="togglePasswordView(document.getElementById('signup_password'), this)"
+                                id="showloginpasswordbtn"
+                                style="width: 15px; position: absolute; bottom: -30px; right: 10px;"
+                                src="https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png" />
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <input type="checkbox" name="agreed2TNC" id="agreed2TNC"> I agree to the <a href="#">Terms and Conditions</a>...
+                    <br>
+                    <button style="margin-left: 0" type="button">SIGN UP</button>
+
+                </form>
+            </div>
 
         </div>
 

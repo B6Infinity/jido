@@ -5,6 +5,9 @@
     --ORANGEISH__fade2: rgba(238, 63, 54, 0.5);
     --ORANGEISH__fade3: rgba(238, 63, 54, 0.3);
     --YELLOWISH: #FAAF40;
+    --YELLOWISH__fade1: rgba(250, 176, 64, 0.8);
+    --YELLOWISH__fade2: rgba(250, 176, 64, 0.5);
+    --YELLOWISH__fade3: rgba(250, 176, 64, 0.3);
 }
 
 * {
@@ -17,6 +20,8 @@
 
 body {
     background-color: #000000;
+    /* overflow-x:visible; */
+    
 }
 
 /* TEXT DECOR */
@@ -64,7 +69,12 @@ body {
 hr {
     border: 1px solid #555;
 }
-
+input[type='checkbox']:focus{transform: translate(0,0);}
+input[type='checkbox']:hover{}
+input[type='checkbox']{
+    width: min-content;
+    
+}
 input::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: black;
@@ -101,6 +111,28 @@ input {
     border-radius: 5px;
     background-color: #666;
     width: 250px;
+}
+
+button:active {
+    transform: rotate(-5deg);
+    background-color: var(--ORANGEISH);
+
+}
+button:hover {
+    background-color: var(--ORANGEISH__fade1);
+    /* transform: translate(-3px, -3px); */
+    color: whitesmoke;
+}
+
+button {
+    color: #202020;
+    outline: none;
+    transition: 0.2s;
+    background-color: var(--YELLOWISH__fade1);
+    padding: 5px 10px;
+    margin: 10px;
+    border-radius: 5px;
+    font-weight: 600;
 }
 
 /* FLEXy */
@@ -216,8 +248,35 @@ input {
     box-shadow: 2px 2px 3px var(--YELLOWISH);
 }
 
+.social_login img {
+    width: 25px;
+}
+
+.social_login:hover {
+    transform: translateY(-2px);
+}
+.social_login {
+    padding: 10px;
+    background: #000000;
+    border-radius: 3px;
+}
+
+.noselect {
+    user-select: none;
+}
+
+.orange_neon:hover {
+    box-shadow: 0 9px 9px -4px var(--ORANGEISH);
+}
+
+.orange_neon {
+    transition: 0.1s;
+    background-color: #000000;
+    box-shadow: 0 5px 7px -4px var(--ORANGEISH);
+}
 
 /* Tooltip container */
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -229,20 +288,23 @@ input {
 
 .tooltip .tooltiptext {
     font-size: 15px;
-    visibility: hidden;
+    display: none;
     width: 120px;
     background-color: black;
     color: #fff;
     text-align: center;
-    padding: 5px 0;
+    padding: 3px 0;
+    right: 0;
+    bottom: -65px;
     border-radius: 6px;
     position: absolute;
     z-index: 1;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
+
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+    display: inline-block;
 }
 
 /* FOR PHONES */
