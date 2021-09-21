@@ -14,7 +14,7 @@
 
                     {% csrf_token %}
 
-                    <input type="text" name="username" id="username" placeholder="Username"><br><br>
+                    <input type="text" name="login_username" id="login_username" placeholder="Username"><br><br>
 
                     <div style="position: relative;">
                         <input type="password" name="login_password" id="login_password" placeholder="Password">
@@ -65,11 +65,11 @@
 
             <div class="signin-container noselect">
 
-                <form action="/handlelogin" method="post">
+                <form action="/handlesignup" method="post">
 
                     {% csrf_token %}
 
-                    <input style="width: 90%;" type="text" name="username" id="username" autocomplete="off" placeholder="Username"><br><br>
+                    <input style="width: 90%;" type="text" name="signup_username" id="signup_username" autocomplete="off" placeholder="Username"><br><br>
                     <input style="width: 90%;" type="text" name="first_name" id="first_name" autocomplete="off" placeholder="Display Name"><br><br>
                     <input style="width: 90%;" type="email" name="email" id="email" autocomplete="off" placeholder="E-mail"><br><br>
 
@@ -85,7 +85,7 @@
                     </div>
                     <br>
                     <br>
-                    <input type="checkbox" name="agreed2TNC" id="agreed2TNC"> I agree to the <a href="#">Terms and Conditions</a>...
+                    <input onchange="console.log(this.value);" type="checkbox" name="agreed2TNC" id="agreed2TNC"> I agree to the <a href="#">Terms and Conditions</a>...
                     <br>
                     <button style="margin-left: 0" type="button">SIGN UP</button>
 

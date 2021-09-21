@@ -21,7 +21,6 @@
 body {
     background-color: #000000;
     /* overflow-x:visible; */
-    
 }
 
 /* TEXT DECOR */
@@ -69,12 +68,37 @@ body {
 hr {
     border: 1px solid #555;
 }
-input[type='checkbox']:focus{transform: translate(0,0);}
-input[type='checkbox']:hover{}
-input[type='checkbox']{
-    width: min-content;
-    
+
+input[type='checkbox']:focus {
+    transform: translate(0, 0);
 }
+
+/* input[type='checkbox']:hover {} */
+
+input[type='checkbox']::before {
+    display: block;
+    text-align: center;
+}
+input[type='checkbox']:checked {
+    background-color: #EE4036;
+}
+
+input[type='checkbox'] {
+    width: min-content;
+    -webkit-appearance: none;
+    padding: 6px;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance:none;
+    margin: 0;
+    /* border: 1px solid var(--ORANGEISH); */
+    border-radius: 3px;
+    outline: none;
+    transition-duration: 0.3s;
+    background-color: var(--ORANGEISH__fade3);
+    cursor: pointer;
+}
+
 input::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: black;
@@ -116,18 +140,22 @@ input {
 button:active {
     transform: rotate(-5deg);
     background-color: var(--ORANGEISH);
-
 }
+
 button:hover {
     background-color: var(--ORANGEISH__fade1);
     /* transform: translate(-3px, -3px); */
     color: whitesmoke;
 }
 
+a {
+    color: var(--ORANGEISH);
+}
+
 button:disabled {
     background-color: var(--YELLOWISH__fade3);
-
 }
+
 button {
     color: #202020;
     background-color: var(--YELLOWISH__fade1);
@@ -259,6 +287,7 @@ button {
 .social_login:hover {
     transform: translateY(-2px);
 }
+
 .social_login {
     padding: 10px;
     background: #000000;
