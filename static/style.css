@@ -85,10 +85,13 @@ input::-ms-input-placeholder {
 input:hover {
     background-color: #888;
 }
+
 input:focus {
     transform: translate(-3px, -3px);
     background-color: var(--ORANGEISH__fade1);
+    font-weight: 500;
 }
+
 input {
     transition: 0.2s;
     border: none;
@@ -96,7 +99,6 @@ input {
     padding: 5px;
     margin: 3px;
     border-radius: 5px;
-    /* color: white; */
     background-color: #666;
     width: 250px;
 }
@@ -212,6 +214,35 @@ input {
     width: 96%;
     border-radius: 3px;
     box-shadow: 2px 2px 3px var(--YELLOWISH);
+}
+
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
+    font-size: 15px;
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
 
 /* FOR PHONES */

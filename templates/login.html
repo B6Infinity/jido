@@ -6,27 +6,59 @@
     <div class="flex-row row-responsive">
         <div class="flex-object">
             <div class="fnt-med">SIGN IN</div>
-            
+
             <br><br>
             <div class="signin-container">
-                <input type="text" name="username" id="username" placeholder="Username"><br><br>
-                <input type="password" name="password" id="password" placeholder="Password"><br>
+
+                <form action="/handlelogin" method="post">
+
+                    {% csrf_token %}
+
+                    <input type="text" name="username" id="username" placeholder="Username"><br><br>
+                    <div style="position: relative;">
+                        <input type="password" name="login_password" id="login_password" placeholder="Password">
+                        <div class="tooltip">
+                            <div class="tooltiptext">Show Password</div>
+                            <img onclick="togglePasswordView(document.getElementById('login_password'), this)"
+                            
+                            id="showloginpasswordbtn"
+                            style="width: 15px; position: absolute; bottom: -30px; right: 10px;"
+                            src="https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png" />
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+                <script> // UI Scripting
+                    function togglePasswordView(inpobj, eye) {
+
+                        if (inpobj.type == 'password'){
+                            inpobj.type = 'text'; // Open Eye
+                            eye.src = "https://img.icons8.com/fluency-systems-filled/48/ffffff/visible.png";
+                        }else{
+                            inpobj.type = 'password'; // Closed Eye
+                            eye.src = "https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png";
+                        }
+                    }
+                </script>
             </div>
-            
+
         </div>
-        
-        
-        
-        
+
+
+
+
         <hr style="height: 70vh;">
         <div class="flex-object flex-grow">
             <div class="fnt-med">SIGN UP</div>
-        
+
         </div>
 
 
     </div>
-    
+
 </div>
 
 
