@@ -10,7 +10,7 @@
             <br><br>
             <div class="signin-container noselect">
 
-                <form action="/handlelogin" method="post">
+                <form id="login_form" action="/handlelogin" method="post">
 
                     {% csrf_token %}
 
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <br>
-                    <button style="margin-left: 0" id="login_btn" type="button">LOGIN</button>
+                    <button style="margin-left: 0" id="login_btn" type="button" onclick="loginUser()">LOGIN</button>
 
                 </form>
                 <br>
@@ -40,11 +40,11 @@
 
                     <div class="social_login orange_neon" style="background-color: #171515;">
                         Login Using GitHub
-                        <img src="https://img.icons8.com/ios-glyphs/50/ffffff/github.png" style="float: right;">    
+                        <img src="https://img.icons8.com/ios-glyphs/50/ffffff/github.png" style="float: right;">
                     </div>
                     <div class="tooltiptext">Coming Soon!</div>
                 </div>
-                
+
 
                 <script> // UI Scripting
                     function togglePasswordView(inpobj, eye) {
@@ -56,22 +56,6 @@
                             inpobj.type = 'password'; // Closed Eye
                             eye.src = "https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png";
                         }
-                    }
-
-                    function pushLoaderUI(obj){
-                        console.log(obj.offsetHeight, obj.offsetWidth);
-
-                        obj.style.height = String(obj.offsetHeight)+'px'; obj.style.width = String(obj.offsetWidth)+'px';
-
-                        obj.innerHTML = `<img class="loading-gif-img" src="https://i.pinimg.com/originals/a4/f2/cb/a4f2cb80ff2ae2772e80bf30e9d78d4c.gif" alt="">`;
-
-                    }
-
-                    function removeLoader(obj, newHTML){
-                        obj.style.removeProperty('height');
-                        obj.style.removeProperty('width');
-
-                        obj.innerHTML = newHTML;
                     }
 
                 </script>
@@ -89,7 +73,7 @@
 
             <div class="signin-container noselect">
 
-                <form action="/handlesignup" method="post">
+                <form id="signup_form" action="/handlesignup" method="post">
 
                     {% csrf_token %}
 
@@ -99,8 +83,8 @@
                         placeholder="Display Name"><br><br>
                     <input style="width: 90%;" type="email" name="email" id="email" autocomplete="off"
                         placeholder="E-mail" required><br><br>
-                    <input style="width: 90%;" type="text" name="github_username" id="github_username" autocomplete="off"
-                        placeholder="GitHub Username (Only for developers)"><br><br>
+                    <input style="width: 90%;" type="text" name="github_username" id="github_username"
+                        autocomplete="off" placeholder="GitHub Username (Only for developers)"><br><br>
 
                     <div style="position: relative;">
                         <input style="width: 90%;" type="password" name="signup_password" id="signup_password"
@@ -117,10 +101,12 @@
                     </div>
                     <br>
                     <br>
-                    <input onchange="console.log(this.value);" type="checkbox" name="agreed2TNC" id="agreed2TNC"> I
-                    agree to the <a href="#">Terms and Conditions</a>...
+                    <input 
+                        onclick="if(this.value == 'off'){this.value = 'on'}else{this.value = 'off'} console.log(this.value);" 
+                        type="checkbox" name="agreed2TNC" id="agreed2TNC"><script>document.getElementById('agreed2TNC').value = 'off';</script>
+                    I agree to the <a href="#">Terms and Conditions</a>...
                     <br>
-                    <button style="margin-left: 0" id="signup_btn" type="button" disabled>SIGN UP</button>
+                    <button style="margin-left: 0" id="signup_btn" type="button" onclick="signUpUser()">SIGN UP</button>
 
                 </form>
             </div>
@@ -133,7 +119,29 @@
 </div>
 
 <script>
-    let b = document.getElementById('login_btn');
+
+    loginform = document.getElementById('login_form');
+    signupform = document.getElementById('signup_form');
+    function loginUser(){
+        if(loginform.reportValidity() == false){
+            return null;
+        }
+        
+        // Execute Code
+        
+    }
+    
+    function signUpUser(){
+        if(signupform.reportValidity() == false){
+            return null;
+        }
+        
+        // Execute Code
+        
+        
+
+    }
+
 </script>
 
 {% endblock body %}
