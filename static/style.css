@@ -260,6 +260,7 @@ button {
 .navigationmenu_item_img img {
     width: 38px;
     object-fit: contain;
+    border-radius: 50%;
 }
 
 .navigationmenu_item_img:hover {

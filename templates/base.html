@@ -1,3 +1,4 @@
+{% load b6_filters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +11,9 @@
 </head>
 
 <body>
+
+
+
     <div class="mainheader">
         <div class="innerheader">
 
@@ -33,7 +37,17 @@
                 </div>
                 <div class="navigationmenu_item" id="userProfile" onclick="window.location.href = '/login';">
                     <div class="navigationmenu_item_img">
-                        <img src="https://rpgplanner.com/wp-content/uploads/2020/06/no-photo-available.png" />
+                        {% if user.is_authenticated %}
+                            <div class="tooltip">
+                                <img src="{{user|getProfilePictureURL}}" />
+                                <div style="bottom: -18px; right: 0; width: auto;" class="tooltiptext">{{user}}</div>
+                            </div>
+                            
+                            
+
+                        {% else %}
+                            <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user--v1.png"/>
+                        {% endif %}
                     </div>
                 </div>
             </div>
