@@ -120,6 +120,9 @@ input:hover {
     background-color: #888;
 }
 
+input:required {
+    border: 1px solid var(--YELLOWISH__fade1);
+}
 input:focus {
     transform: translate(-3px, -3px);
     background-color: var(--ORANGEISH__fade1);
@@ -312,8 +315,8 @@ button {
 
 .tooltip {
     position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
+    /* display: inline-block; */
+    /* border-bottom: 1px dotted black; */
     /* If you want dots under the hoverable text */
 }
 
@@ -328,7 +331,7 @@ button {
     text-align: center;
     padding: 3px 0;
     right: 0;
-    bottom: -65px;
+    /* bottom: -65px; */
     border-radius: 6px;
     position: absolute;
     z-index: 1;
@@ -378,6 +381,15 @@ button {
     }
     hr {
         display: none;
+    }
+    input{
+        width: 90%;
+    }
+    .slate-container {
+        height: 100%;
+        margin: 0;
+        padding: 0%;
+        width: 100%;
     }
 }
 
