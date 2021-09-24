@@ -123,11 +123,14 @@
     loginform = document.getElementById('login_form');
     signupform = document.getElementById('signup_form');
     function loginUser(){
+        pushLoaderUI(document.getElementById('login_btn'));
+
         if(loginform.reportValidity() == false){
             return null;
         }
         
         // Execute Code
+        loginform.submit();
         
     }
     
