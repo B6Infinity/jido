@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <br>
-                    <button style="margin-left: 0" type="button">LOGIN</button>
+                    <button style="margin-left: 0" id="login_btn" type="button">LOGIN</button>
 
                 </form>
                 <br>
@@ -44,6 +44,7 @@
                     </div>
                     <div class="tooltiptext">Coming Soon!</div>
                 </div>
+                
 
                 <script> // UI Scripting
                     function togglePasswordView(inpobj, eye) {
@@ -55,6 +56,22 @@
                             inpobj.type = 'password'; // Closed Eye
                             eye.src = "https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png";
                         }
+                    }
+
+                    function pushLoaderUI(obj){
+                        console.log(obj.offsetHeight, obj.offsetWidth);
+
+                        obj.style.height = String(obj.offsetHeight)+'px'; obj.style.width = String(obj.offsetWidth)+'px';
+
+                        obj.innerHTML = `<img class="loading-gif-img" src="https://i.pinimg.com/originals/a4/f2/cb/a4f2cb80ff2ae2772e80bf30e9d78d4c.gif" alt="">`;
+
+                    }
+
+                    function removeLoader(obj, newHTML){
+                        obj.style.removeProperty('height');
+                        obj.style.removeProperty('width');
+
+                        obj.innerHTML = newHTML;
                     }
 
                 </script>
@@ -77,18 +94,22 @@
                     {% csrf_token %}
 
                     <input style="width: 90%;" type="text" name="signup_username" id="signup_username"
-                        autocomplete="off" placeholder="Username"><br><br>
+                        autocomplete="off" placeholder="Username" required><br><br>
                     <input style="width: 90%;" type="text" name="first_name" id="first_name" autocomplete="off"
                         placeholder="Display Name"><br><br>
                     <input style="width: 90%;" type="email" name="email" id="email" autocomplete="off"
-                        placeholder="E-mail"><br><br>
+                        placeholder="E-mail" required><br><br>
+                    <input style="width: 90%;" type="text" name="github_username" id="github_username" autocomplete="off"
+                        placeholder="GitHub Username (Only for developers)"><br><br>
 
                     <div style="position: relative;">
                         <input style="width: 90%;" type="password" name="signup_password" id="signup_password"
-                            placeholder="Password">
+                            placeholder="Password" required>
+                        <input style="width: 90%;" type="password" name="cf_signup_password" id="cf_signup_password"
+                            placeholder="Confirm Password" required>
                         <div class="tooltip">
                             <div class="tooltiptext" style="bottom: -60px;">Show Password</div>
-                            <img onclick="togglePasswordView(document.getElementById('signup_password'), this)"
+                            <img onclick="togglePasswordView(document.getElementById('signup_password'), this);togglePasswordView(document.getElementById('cf_signup_password'), this);"
                                 id="showloginpasswordbtn"
                                 style="width: 15px; position: absolute; bottom: -30px; right: 10px;"
                                 src="https://img.icons8.com/material-outlined/24/ffffff/closed-eye.png" />
@@ -99,7 +120,7 @@
                     <input onchange="console.log(this.value);" type="checkbox" name="agreed2TNC" id="agreed2TNC"> I
                     agree to the <a href="#">Terms and Conditions</a>...
                     <br>
-                    <button style="margin-left: 0" type="button" disabled>SIGN UP</button>
+                    <button style="margin-left: 0" id="signup_btn" type="button" disabled>SIGN UP</button>
 
                 </form>
             </div>
@@ -111,6 +132,8 @@
 
 </div>
 
-
+<script>
+    let b = document.getElementById('login_btn');
+</script>
 
 {% endblock body %}
