@@ -315,10 +315,7 @@ button {
 /* Tooltip container */
 
 .tooltip {
-    position: relative;
-    /* display: inline-block; */
-    /* border-bottom: 1px dotted black; */
-    /* If you want dots under the hoverable text */
+    position: relative;    
 }
 
 /* Tooltip text */
@@ -360,6 +357,139 @@ button {
     width: 100%;
 }
 
+
+/* ALERT BOX */
+
+#alert-box-container {
+    /* background: red; */
+    position: fixed;
+    right: 0;
+    top: 10%;
+    z-index: 6;
+    /* max-height: 386px;
+    overflow-y: hidden; */
+}
+
+.alert-box a {
+    transition: 0.2s;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 1px black;
+}
+
+.alert-box a:hover {
+    text-shadow: 2px 2px 2px black;
+    transition: 0.2s;
+}
+
+.enterAlert {
+    animation-name: easein_R;
+    animation-duration: 0.2s;
+}
+
+.exitAlert {
+    animation-name: easeout_R;
+    animation-duration: 0.6s;
+}
+
+@keyframes easeout_R {
+    0% {
+        transform: translate(0, 0);
+    }
+    20% {
+        transform: translate(-20%, 0);
+    }
+    30% {
+        transform: translate(-20%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(140%, 0);
+    }
+}
+
+@keyframes easein_R {
+    0% {
+        transform: translate(140%, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.alert-box {
+    transition: 0.2s;
+    background-color: #101012;
+    color: goldenrod;
+    box-shadow: 1px 1px 2px goldenrod;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 375px;
+    margin: 5px;
+    user-select: none;
+    font-weight: 600;
+    z-index: 6;
+    position: initial;
+    /* background: #D4EDDA; */
+}
+
+/* TAGS */
+.warning {
+    color: goldenrod;
+    box-shadow: 1px 1px 2px goldenrod;
+}
+.warning:hover{
+    box-shadow: 1px 1px 8px goldenrod;
+}
+.error {
+    color: red;
+    box-shadow: 1px 1px 2px red;
+}
+.error:hover{
+    box-shadow: 1px 1px 8px red;
+}
+.success{
+    color: #03a503;
+    box-shadow: 1px 1px 2px #03a503;
+}
+.success:hover{
+    box-shadow: 1px 1px 8px #03a503;
+}    
+.info{
+    color: #5599FF;
+    box-shadow: 1px 1px 2px #5599FF;
+}
+.info:hover{
+    box-shadow: 1px 1px 8px #5599FF;
+}
+
+
+
+
+.alert-icon {
+    margin-right: 10px;
+    margin-left: 3px;
+    /* border-left: 3px solid rgba(255, 145, 0, 0.808); */
+}
+
+.alert-message {
+    padding: 10px;
+    padding-right: 14px;
+    font-size: 16px;
+    margin-right: 25px;
+}
+
+.alert-closebtn {
+    float: right;
+    padding: 3px;
+    margin-left: 8px;
+    transition: 0.2s;
+}
+
+.alert-closebtn:hover {
+    background: rgba(0, 0, 0, 0.219);
+}
+
+/* ALERT BOX END */
 
 
 

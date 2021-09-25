@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+        integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
     <title>jido - {% block title %}{% endblock title %}</title>
@@ -27,26 +29,26 @@
             <div class="navigationmenu">
                 <div class="navigationmenu_item">
                     <div class="navigationmenu_item_img">
-                        <img src="https://img.icons8.com/metro/52/ffffff/plus.png" />
+                        <img src="https://img.icons8.com/material-outlined/48/ffffff/search--v1.png" />
                     </div>
                 </div>
                 <div class="navigationmenu_item">
                     <div class="navigationmenu_item_img">
-                        <img src="https://img.icons8.com/material-outlined/48/ffffff/search--v1.png" />
+                        <img src="https://img.icons8.com/metro/52/ffffff/plus.png" />
                     </div>
                 </div>
                 <div class="navigationmenu_item" id="userProfile" onclick="window.location.href = '/login';">
                     <div class="navigationmenu_item_img">
                         {% if user.is_authenticated %}
-                            <div class="tooltip">
-                                <img src="{{user|getProfilePictureURL}}" />
-                                <div style="bottom: -18px; right: 0; width: auto;" class="tooltiptext">{{user}}</div>
-                            </div>
-                            
-                            
+                        <div class="tooltip">
+                            <img src="{{user|getProfilePictureURL}}" />
+                            <div style="bottom: -18px; right: 0; width: auto;" class="tooltiptext">{{user}}</div>
+                        </div>
+
+
 
                         {% else %}
-                            <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user--v1.png"/>
+                        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user--v1.png" />
                         {% endif %}
                     </div>
                 </div>
@@ -55,9 +57,97 @@
         </div>
     </div>
 
-    <style>
 
-    </style>
+
+    <script>
+        function closeAlertMessage(alertBoxCLSBTN) {
+
+            alertBoxCLSBTN.parentElement.classList.add("exitAlert");
+            setTimeout(function () { alertBoxCLSBTN.parentElement.remove(); }, 600);
+        }
+
+        function closeAlertMessage_TO(alertBox) {
+
+            alertBox.classList.add("exitAlert");
+            setTimeout(function () { alertBox.remove(); }, 600);
+        }
+
+        function createAlertMessage(tag, message) {
+            let alertBoxContainer = document.getElementById('alert-box-container');
+
+            let symbol = ``;
+            if (tag == 'warning') {
+                symbol = '<span class="alert-icon fas fa-exclamation"></span>';
+            } else if (tag == 'info') {
+                symbol = '<span class="alert-icon fas fa-info" ></span>';
+
+            } else if (tag == 'success') {
+                symbol = '<span class="alert-icon fas fa-check" ></span>';
+
+            } else if (tag == 'error') {
+                symbol = '<span class="alert-icon fas fa-times"></span>';
+
+            }
+
+
+            var current = new Date();
+
+            let alertuid = String(current.getHours()) + String(current.getMinutes()) + String(current.getSeconds()) + String(current.getMilliseconds());
+
+            alertBoxContainer.innerHTML += `
+                <div class="alert-box ${tag} enterAlert" id="${alertuid}">
+                    ${symbol}
+                    <span class="alert-message">${message}
+                    </span>
+                    <span class="alert-closebtn fas fa-times" onclick="closeAlertMessage(this)"></span>
+                </div>
+                `;
+
+            setTimeout(function () { document.getElementsByClassName('enterAlert')[0].classList.remove('enterAlert'); }, 200);
+            setTimeout(function () {
+                closeAlertMessage_TO(document.getElementById(alertuid));
+            }, 6000); // Delete Alert after 6 seconds
+
+        }
+
+
+    </script>
+
+
+    <!-- ALERT MESSAGE -->
+
+    <div class="alert-box-container" id="alert-box-container">
+        {% for message in messages %}
+
+        <div class="alert-box {{message.tags}} enterAlert">
+
+            {% if message.tags == 'warning' %}
+            <span class="alert-icon fas fa-exclamation" style="color: rgb(128, 77, 2);"></span>
+            {% elif message.tags == 'info' %}
+            <span class="alert-icon fas fa-info" style="color: rgb(0, 16, 85);"></span>
+            {% elif message.tags == 'success' %}
+            <span class="alert-icon fas fa-check" style="color: rgb(2, 110, 2);"></span>
+            {% elif message.tags == 'error' %}
+            <span class="alert-icon fas fa-times" style="color: rgb(85, 0, 0);"></span>
+            {% endif %}
+
+            <span class="alert-message">{{message|safe}}
+
+            </span>
+            <span class="alert-closebtn fas fa-times" onclick="closeAlertMessage(this)"></span>
+
+
+        </div>
+
+        <script>setTimeout(function () { document.getElementsByClassName('enterAlert')[0].classList.remove('enterAlert'); }, 200);</script>
+
+
+        {% endfor %}
+    </div>
+
+    <!-- ALERTS END -->
+
+
 
 
     <!-- INJECTED BODY -->
@@ -71,7 +161,7 @@
 </body>
 {% block postdoc_script %}{% endblock postdoc_script %}
 <script>
-    
+
     function pushLoaderUI(obj) {
         console.log(obj.offsetHeight, obj.offsetWidth);
 
