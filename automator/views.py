@@ -2,9 +2,11 @@ from django.core.checks.messages import ERROR
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
+    
     return render(request, 'home.html')
 
 def loginorsignup(request):
@@ -25,18 +27,29 @@ def logoutuser(request):
 
 def handlelogin(request):
     if request.method == 'POST':
-        RESPONSE = {"SUCCESS": True, "ERRORS": []}
+        # RESPONSE = {"SUCCESS": True, "ERRORS": []}
 
         username = request.POST['login_username']
         password = request.POST['login_password']
 
         # Frisk Data
         if User.objects.filter(username=username).first() == None:
-            RESPONSE['SUCCESS'] = False
-            RESPONSE['ERROR'].append("Username does not exist!")
-
-        
-        # -------------- FINISH AFTER COMPLETING MESSAGES FRONT END ---------------
+            # RESPONSE['SUCCESS'] = False
+            # RESPONSE['ERROR'].append("Username does not exist!")
+            messages.error(request, "Username does not exist!")
             
+            return redirect('loginorsignup')
+        
+        login_user = authenticate(username=username, password=password)
 
-        # return redirect('home')
+        if login_user is None:
+            messages.error(request, "Invalid Passsword!")
+            return redirect('loginorsignup')
+        
+        # Correct Creds - Login Now... HAYAKU!
+
+        messages.success(request, f"Logged in as {login_user}!")
+
+        login(request, login_user)
+
+        return redirect('home')

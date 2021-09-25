@@ -292,6 +292,11 @@ button {
     transform: translateY(-2px);
 }
 
+.social_login:active {
+    transform: translateY(0px);
+    
+
+}
 .social_login {
     padding: 10px;
     background: #000000;
@@ -306,6 +311,9 @@ button {
     box-shadow: 0 9px 9px -4px var(--ORANGEISH);
 }
 
+.orange_neon:active {
+    box-shadow: 0 6px 8px -4px var(--ORANGEISH);
+}
 .orange_neon {
     transition: 0.1s;
     background-color: #000000;

@@ -126,6 +126,8 @@
         pushLoaderUI(document.getElementById('login_btn'));
 
         if(loginform.reportValidity() == false){
+            removeLoaderUI(document.getElementById('login_btn'), "LOGIN");
+            console.log("ERE")
             return null;
         }
         
