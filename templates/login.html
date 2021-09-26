@@ -137,12 +137,17 @@
     }
     
     function signUpUser(){
+        pushLoaderUI(document.getElementById('signup_btn'));
         if(signupform.reportValidity() == false){
+            removeLoaderUI(document.getElementById('signup_btn'), "LOGIN");
             return null;
         }
         
-        // Execute Code
+        // Frisk Form
         
+        
+        // Execute Code
+        console.log("Sign Up the User NOW!")
         
 
     }

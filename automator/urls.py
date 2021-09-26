@@ -11,4 +11,11 @@ urlpatterns = [
     path('handlelogin', view=views.handlelogin, name='handlelogin'),
     path('logout', view=views.logoutuser, name='logoutuser'),
     path('myprofile', view=views.myprofile, name='myprofile'),
+
+    # APIs
+    path('usernameexists', view=views.usernameexists, name='usernameexists'),
+
+    # STATIC APIs
+
+
 ]
