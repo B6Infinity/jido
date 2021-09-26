@@ -90,7 +90,7 @@ def handlesignup(request):
 
         # CREATE USER NOW
 
-        newuser = User.objects.create(username=signup_username, password=signup_password, first_name=first_name, email=email)
+        newuser = User.objects.create_user(username=signup_username, password=signup_password, first_name=first_name, email=email)
         UserProfile.objects.create(user=newuser,github_username=github_username)
 
         messages.success(request, f"Logged in as {newuser}")
