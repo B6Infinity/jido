@@ -1,4 +1,6 @@
+from automator.models import UserProfile
 from django.core.checks.messages import ERROR
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
@@ -53,41 +55,63 @@ def handlelogin(request):
         login(request, login_user)
 
         return redirect('home')
-
-        
+       
 def handlesignup(request):
     if request.method == 'POST':
         # RESPONSE = {"SUCCESS": True, "ERRORS": []}
 
-        username = request.POST['login_username']
-        password = request.POST['login_password']
+        signup_username = request.POST['signup_username']
+        first_name = request.POST['first_name']
+        email = request.POST['email']
+        github_username = request.POST['github_username']
+        signup_password = request.POST['signup_password']
+        cf_signup_password = request.POST['cf_signup_password']
+        agreed2TNC = request.POST['agreed2TNC']
+
 
         # Frisk Data
-        if User.objects.filter(username=username).first() == None:
-            # RESPONSE['SUCCESS'] = False
-            # RESPONSE['ERROR'].append("Username does not exist!")
-            messages.error(request, "Username does not exist!")
-            
-            return redirect('loginorsignup')
+
+        ERROR_COUNT = 0
+
+        if User.objects.filter(username=signup_username).first() != None:
+            ERROR_COUNT += 1
+            messages.error(request, "Username already exists!")
         
-        login_user = authenticate(username=username, password=password)
+        if signup_password != cf_signup_password:
+            ERROR_COUNT += 1
+            messages.error(request, "Passwords don't match!")
 
-        if login_user is None:
-            messages.error(request, "Invalid Passsword!")
-            return redirect('loginorsignup')
-        
-        # Correct Creds - Login Now... HAYAKU!
+        if agreed2TNC != 'on':
+            ERROR_COUNT += 1
+            messages.error(request, "You must agree to the <a href='#'>Terms and Conditions</a>")
 
-        messages.success(request, f"Logged in as {login_user}!")
+        if ERROR_COUNT != 0:
+            return redirect('signuporlogin')
 
-        login(request, login_user)
+        # CREATE USER NOW
 
-        # return redirect('home')
+        newuser = User.objects.create(username=signup_username, password=signup_password, first_name=first_name, email=email)
+        UserProfile.objects.create(user=newuser,github_username=github_username)
+
+        messages.success(request, f"Logged in as {newuser}")
+        login(request, newuser)
+
+        return redirect('home')
 
 
 # APIs
 
 def usernameexists(request):
-    pass
+    if request.method == 'POST':
+        RESPONSE = {"SUCCESS": True, "ERRORS": []}
+
+        username_to_check_availability = request.POST['username_to_check_availability']
+
+        if User.objects.filter(username=username_to_check_availability).first()!= None:
+            RESPONSE['SUCCESS'] = False
+            RESPONSE['ERRORS'].append("Username Already Exists")
+
+        return JsonResponse(RESPONSE)
+        
 
 

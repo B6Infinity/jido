@@ -101,9 +101,10 @@
                     </div>
                     <br>
                     <br>
-                    <input 
-                        onclick="if(this.value == 'off'){this.value = 'on'}else{this.value = 'off'} console.log(this.value);" 
-                        type="checkbox" name="agreed2TNC" id="agreed2TNC"><script>document.getElementById('agreed2TNC').value = 'off';</script>
+                    <input
+                        onclick="if(this.value == 'off'){this.value = 'on'}else{this.value = 'off'} console.log(this.value);"
+                        type="checkbox" name="agreed2TNC" id="agreed2TNC">
+                    <script>document.getElementById('agreed2TNC').value = 'off';</script>
                     I agree to the <a href="#">Terms and Conditions</a>...
                     <br>
                     <button style="margin-left: 0" id="signup_btn" type="button" onclick="signUpUser()">SIGN UP</button>
@@ -120,35 +121,78 @@
 
 <script>
 
+    let csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
     loginform = document.getElementById('login_form');
     signupform = document.getElementById('signup_form');
-    function loginUser(){
+    function loginUser() {
         pushLoaderUI(document.getElementById('login_btn'));
 
-        if(loginform.reportValidity() == false){
+        if (loginform.reportValidity() == false) {
             removeLoaderUI(document.getElementById('login_btn'), "LOGIN");
             console.log("ERE")
             return null;
         }
-        
+
         // Execute Code
         loginform.submit();
-        
+
     }
-    
-    function signUpUser(){
+
+    function signUpUser() {
         pushLoaderUI(document.getElementById('signup_btn'));
-        if(signupform.reportValidity() == false){
-            removeLoaderUI(document.getElementById('signup_btn'), "LOGIN");
+        if (signupform.reportValidity() == false) {
+            removeLoaderUI(document.getElementById('signup_btn'), "SIGN UP");
             return null;
         }
-        
+
         // Frisk Form
+
+        let ERRORS = 0;
+
+
+        // Username Exists |!
+
+        let form = new FormData();
+        form.append('username_to_check_availability', document.getElementById('signup_username').value);
+
+        fetch(`usernameexists`,
+            {
+                method: 'POST',
+                body: form,
+                headers: {
+                    'Accept': 'multipart/form-data, application/json, text/plain, */*',
+                    "X-CSRFToken": csrftoken
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data["SUCCESS"]) {
+                    // NICE Then
+                } else {
+                    for (let error in data["ERRORS"]) {
+                        createAlertMessage('error', data["ERRORS"][error]);
+                        ERRORS++;
+                    }
+                }
+            });
+
+        // If Passwords Match
+        if (document.getElementById('signup_password').value != document.getElementById('cf_signup_password').value) {
+            createAlertMessage('error', "Passwords don't match"); ERRORS++;
+        }
+
+        console.log(document.getElementById('agreed2TNC').value);
+        if (document.getElementById('agreed2TNC').value != 'on') {
+            ERRORS++; createAlertMessage('error', "You must agree to the <a href='#'>Terms and Conditions</a>");
+        }
         
-        
-        // Execute Code
-        console.log("Sign Up the User NOW!")
-        
+        removeLoaderUI(document.getElementById('signup_btn'), "SIGN UP");
+
+        if (ERRORS == 0){
+            signupform.submit();
+        }
 
     }
 
