@@ -13,10 +13,17 @@ class UserProfile(models.Model):
 
 
     def save(self, *args, **kwargs):
+        if self.github_username is not None:
+            if len(self.github_username.strip()) != 0: # User has a GitHub Username
+                self.profilePic_url = f'https://avatars.githubusercontent.com/{self.github_username}'
+                self.is_developer = True
+            else:
+                self.profilePic_url = f'https://rpgplanner.com/wp-content/uploads/2020/06/no-photo-available.png'
+                self.is_developer = False
 
-        if len(self.github_username.strip()) != 0: # User has a GitHub Username
-            self.profilePic_url = f'https://avatars.githubusercontent.com/{self.github_username}'
-            self.is_developer = True
+        else:
+            self.profilePic_url = f'https://rpgplanner.com/wp-content/uploads/2020/06/no-photo-available.png'
+            self.is_developer = False
 
 
         super(UserProfile, self).save(*args, **kwargs)
