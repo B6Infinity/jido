@@ -33,3 +33,7 @@ class UserProfile(models.Model):
 
     def __str__(self) -> str:
         return str(self.user) + f" - {self.github_username}"
+
+
+class Automation(models.Model):
+    pass

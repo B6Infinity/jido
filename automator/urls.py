@@ -7,11 +7,18 @@ urlpatterns = [
     
     path('', view=views.home, name='home'),
     path('home', view=views.home, name='home'),
+
+    # Authentication and Stuff
     path('login', view=views.loginorsignup, name='loginorsignup'),
     path('handlelogin', view=views.handlelogin, name='handlelogin'),
     path('logout', view=views.logoutuser, name='logoutuser'),
     path('myprofile', view=views.myprofile, name='myprofile'),
     path('handlesignup', view=views.handlesignup, name='handlesignup'),
+
+    # Applicative
+    path('automationcreator', view=views.automationcreator, name='automationcreator'),
+
+
 
     # APIs
     path('usernameexists', view=views.usernameexists, name='usernameexists'),

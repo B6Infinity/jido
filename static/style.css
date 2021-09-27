@@ -8,6 +8,10 @@
     --YELLOWISH__fade1: rgba(250, 176, 64, 0.8);
     --YELLOWISH__fade2: rgba(250, 176, 64, 0.5);
     --YELLOWISH__fade3: rgba(250, 176, 64, 0.3);
+    --SUCCESS: #026e02;
+    --WARNING: #b16c03;
+    --ERROR: #9d0404;
+    --INFO: #0b97b6;
 }
 
 * {
@@ -65,6 +69,10 @@ body {
     font-size: 10px;
 }
 
+.orange-text {
+    color: var(--ORANGEISH);
+}
+
 hr {
     border: 1px solid #555;
 }
@@ -79,6 +87,7 @@ input[type='checkbox']::before {
     display: block;
     text-align: center;
 }
+
 input[type='checkbox']:checked {
     background-color: #EE4036;
 }
@@ -89,7 +98,7 @@ input[type='checkbox'] {
     padding: 6px;
     -moz-appearance: none;
     -o-appearance: none;
-    appearance:none;
+    appearance: none;
     margin: 0;
     /* border: 1px solid var(--ORANGEISH); */
     border-radius: 3px;
@@ -123,6 +132,7 @@ input:hover {
 input:required {
     border: 1px solid var(--YELLOWISH__fade1);
 }
+
 input:focus {
     transform: translate(-3px, -3px);
     background-color: var(--ORANGEISH__fade1);
@@ -203,6 +213,24 @@ button {
 .flex-object {
     margin: 5px;
     padding: 10px;
+}
+
+.interactive_clickable:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 2px 2px 3px black;
+    padding: 0px 3px;
+    border-radius: 5px;
+}
+
+.interactive_clickable:active {
+    transform: translateY(0px);
+}
+
+.interactive_clickable {
+    user-select: none;
+    display: inline-block;
+    cursor: default;
+    transition: 0.2s;
 }
 
 .mainheader {
@@ -294,9 +322,8 @@ button {
 
 .social_login:active {
     transform: translateY(0px);
-    
-
 }
+
 .social_login {
     padding: 10px;
     background: #000000;
@@ -314,6 +341,7 @@ button {
 .orange_neon:active {
     box-shadow: 0 6px 8px -4px var(--ORANGEISH);
 }
+
 .orange_neon {
     transition: 0.1s;
     background-color: #000000;
@@ -323,7 +351,7 @@ button {
 /* Tooltip container */
 
 .tooltip {
-    position: relative;    
+    position: relative;
 }
 
 /* Tooltip text */
@@ -349,22 +377,20 @@ button {
     display: inline-block;
 }
 
-
-
-.signin-parent-container:hover{
+.signin-parent-container:hover {
     /* border: 1px solid salmon; */
     padding: 13px;
 }
-.signin-parent-container{
+
+.signin-parent-container {
     border-radius: 5px;
     transition: 0.2s;
     height: 100%;
 }
 
-.loading-gif-img{
+.loading-gif-img {
     width: 100%;
 }
-
 
 /* ALERT BOX */
 
@@ -441,37 +467,42 @@ button {
 }
 
 /* TAGS */
+
 .warning {
     color: goldenrod;
     box-shadow: 1px 1px 2px goldenrod;
 }
-.warning:hover{
+
+.warning:hover {
     box-shadow: 1px 1px 8px goldenrod;
 }
+
 .error {
     color: red;
     box-shadow: 1px 1px 2px red;
 }
-.error:hover{
+
+.error:hover {
     box-shadow: 1px 1px 8px red;
 }
-.success{
+
+.success {
     color: #03a503;
     box-shadow: 1px 1px 2px #03a503;
 }
-.success:hover{
+
+.success:hover {
     box-shadow: 1px 1px 8px #03a503;
-}    
-.info{
+}
+
+.info {
     color: #5599FF;
     box-shadow: 1px 1px 2px #5599FF;
 }
-.info:hover{
+
+.info:hover {
     box-shadow: 1px 1px 8px #5599FF;
 }
-
-
-
 
 .alert-icon {
     margin-right: 10px;
@@ -500,8 +531,17 @@ button {
 /* ALERT BOX END */
 
 
-
-
+#interactive_gitbg {
+    background-color: #181818;
+    background-image: url('https://wallpaperaccess.com/full/3415005.jpg');
+    background-position: 150% 220%;
+    transition: 0.1s;
+    background-size: 60%;
+    background-repeat: no-repeat;
+}
+.show_octocat:hover + #interactive_gitbg{
+    background-position: 150% 200%;
+}
 
 
 /* FOR PHONES */
@@ -523,7 +563,7 @@ button {
     hr {
         display: none;
     }
-    input{
+    input {
         width: 90%;
     }
     .slate-container {

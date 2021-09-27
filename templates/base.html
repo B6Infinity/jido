@@ -77,15 +77,15 @@
 
             let symbol = ``;
             if (tag == 'warning') {
-                symbol = '<span class="alert-icon fas fa-exclamation"></span>';
+                symbol = '<span class="alert-icon fas fa-exclamation" style="color: var(--WARNING);"></span>';
             } else if (tag == 'info') {
-                symbol = '<span class="alert-icon fas fa-info" ></span>';
+                symbol = '<span class="alert-icon fas fa-info" style="color: var(--INFO);"></span>';
 
             } else if (tag == 'success') {
-                symbol = '<span class="alert-icon fas fa-check" ></span>';
+                symbol = '<span class="alert-icon fas fa-check" style="color: var(--SUCCESS);"></span>';
 
             } else if (tag == 'error') {
-                symbol = '<span class="alert-icon fas fa-times"></span>';
+                symbol = '<span class="alert-icon fas fa-times" style="color: var(--ERROR);"></span>';
 
             }
 
@@ -122,13 +122,13 @@
         <div class="alert-box {{message.tags}} enterAlert">
 
             {% if message.tags == 'warning' %}
-            <span class="alert-icon fas fa-exclamation" style="color: rgb(128, 77, 2);"></span>
+            <span class="alert-icon fas fa-exclamation" style="color: var(--WARNING);"></span>
             {% elif message.tags == 'info' %}
-            <span class="alert-icon fas fa-info" style="color: rgb(0, 16, 85);"></span>
+            <span class="alert-icon fas fa-info" style="color: var(--INFO);"></span>
             {% elif message.tags == 'success' %}
-            <span class="alert-icon fas fa-check" style="color: rgb(2, 110, 2);"></span>
+            <span class="alert-icon fas fa-check" style="color: var(--SUCCESS);"></span>
             {% elif message.tags == 'error' %}
-            <span class="alert-icon fas fa-times" style="color: rgb(85, 0, 0);"></span>
+            <span class="alert-icon fas fa-times" style="color: var(--ERROR);"></span>
             {% endif %}
 
             <span class="alert-message">{{message|safe}}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Create Automation{% endblock title %}
+{% block body %}
+
+
+{% if not USER_IS_DEV %}
+<div class="slate-container" id="interactive_gitbg" style="height: 80vh;">
+    <h1>You need to <span id="show_octocat" class="orange-text interactive_clickable" onclick="showDeveloperForm()">Turn on Developer
+            Mode</span> to create Automations</h1>
+
+    <form action="/updateusertodev" id="developer_form" method="POST" style="display: none;">
+        {% csrf_token %}
+        <br><br>
+        <input type="text" class="fnt-small" style="width: 90%;" id="github_username" name="github_username"
+            placeholder="Your GitHub Username" autocomplete="off">
+
+            <button class="fnt-x-small" type="button">Update</button>
+
+    </form>
+
+</div>
+<script>
+    function showDeveloperForm() {
+        document.getElementById('developer_form').style.display = 'block';
+    }
+    // UI for Octocat
+
+    document.getElementById('show_octocat').onmouseover = () => {
+        document.getElementById('interactive_gitbg').style.backgroundPositionY = '200%';
+    }
+    document.getElementById('show_octocat').onmouseout = () => {
+        document.getElementById('interactive_gitbg').style.backgroundPositionY = '220%';
+    }
+
+</script>
+
+{% else %}
+IS DEV
+
+
+{% endif %}
+{% endblock body %}

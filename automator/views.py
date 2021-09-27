@@ -4,6 +4,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Create your views here.
@@ -97,6 +98,18 @@ def handlesignup(request):
         login(request, newuser)
 
         return redirect('home')
+
+# Applicative
+def automationcreator(request):
+    if request.user.is_authenticated:
+        PARAMETERS = {"USER_IS_DEV": UserProfile.objects.get(user=request.user).is_developer}
+    else:
+        messages.info(request, "You need to login first!")
+        return redirect('loginorsignup')
+
+    
+
+    return render(request, 'automation_creator.html', PARAMETERS)
 
 
 # APIs
