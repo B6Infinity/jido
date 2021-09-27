@@ -20,16 +20,19 @@
 
 </div>
 <script>
+    let doOctoAnimations = true;
     function showDeveloperForm() {
+        doOctoAnimations = false;
+        document.getElementById('interactive_gitbg').style.backgroundPositionY = '150%';
         document.getElementById('developer_form').style.display = 'block';
     }
     // UI for Octocat
 
     document.getElementById('show_octocat').onmouseover = () => {
-        document.getElementById('interactive_gitbg').style.backgroundPositionY = '200%';
+        if(doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '200%';
     }
     document.getElementById('show_octocat').onmouseout = () => {
-        document.getElementById('interactive_gitbg').style.backgroundPositionY = '220%';
+        if(doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '220%';
     }
 
 </script>
