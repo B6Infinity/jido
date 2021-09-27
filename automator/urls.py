@@ -14,6 +14,7 @@ urlpatterns = [
     path('logout', view=views.logoutuser, name='logoutuser'),
     path('myprofile', view=views.myprofile, name='myprofile'),
     path('handlesignup', view=views.handlesignup, name='handlesignup'),
+    path('updateusertodev', view=views.updateusertodev, name='updateusertodev'),
 
     # Applicative
     path('automationcreator', view=views.automationcreator, name='automationcreator'),
@@ -22,6 +23,7 @@ urlpatterns = [
 
     # APIs
     path('usernameexists', view=views.usernameexists, name='usernameexists'),
+    path('gh_usernameexists', view=views.gh_usernameexists, name='gh_usernameexists'),
 
     # STATIC APIs
 

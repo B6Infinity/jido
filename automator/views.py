@@ -99,6 +99,30 @@ def handlesignup(request):
 
         return redirect('home')
 
+def updateusertodev(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    
+    if request.method == 'POST':
+        # RESPONSE = {"SUCCESS": True, "ERRORS": []}
+
+        gh_username = request.POST['github_username']
+
+        # Frisk The Availability
+        if UserProfile.objects.filter(github_username=gh_username).first() != None:
+            messages.error("GitHub Username Already in Use!")
+            return redirect('automationcreator')
+
+        profile = UserProfile.objects.get(user=request.user)
+        profile.github_username = gh_username
+        profile.save()
+
+        return redirect('automationcreator')
+        
+    
+    
+
 # Applicative
 def automationcreator(request):
     if request.user.is_authenticated:
@@ -126,5 +150,15 @@ def usernameexists(request):
 
         return JsonResponse(RESPONSE)
         
+def gh_usernameexists(request):
+    if request.method == 'POST':
+        RESPONSE = {"SUCCESS": True, "ERRORS": []}
 
+        gh_username_to_check_availability = request.POST['gh_username']
+
+        if UserProfile.objects.filter(github_username=gh_username_to_check_availability).first() != None:
+            RESPONSE['SUCCESS'] = False
+            RESPONSE['ERRORS'].append("GitHub Username Already in Use!")
+
+        return JsonResponse(RESPONSE)
 

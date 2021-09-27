@@ -5,7 +5,8 @@
 
 {% if not USER_IS_DEV %}
 <div class="slate-container" id="interactive_gitbg" style="height: 80vh;">
-    <h1>You need to <span id="show_octocat" class="orange-text interactive_clickable" onclick="showDeveloperForm()">Turn on Developer
+    <h1>You need to <span id="show_octocat" class="orange-text interactive_clickable" onclick="showDeveloperForm()">Turn
+            on Developer
             Mode</span> to create Automations</h1>
 
     <form action="/updateusertodev" id="developer_form" method="POST" style="display: none;">
@@ -14,7 +15,8 @@
         <input type="text" class="fnt-small" style="width: 90%;" id="github_username" name="github_username"
             placeholder="Your GitHub Username" autocomplete="off">
 
-            <button class="fnt-x-small" type="button">Update</button>
+        <button class="fnt-x-small" type="button" id="update_gh_username"
+            onclick="submitGitHubUsername()">Update</button>
 
     </form>
 
@@ -27,12 +29,59 @@
         document.getElementById('developer_form').style.display = 'block';
     }
     // UI for Octocat
-
     document.getElementById('show_octocat').onmouseover = () => {
-        if(doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '200%';
+        if (doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '200%';
     }
     document.getElementById('show_octocat').onmouseout = () => {
-        if(doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '220%';
+        if (doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '220%';
+    }
+
+    function submitGitHubUsername() {
+        let ERRORS = 0;
+        pushLoaderUI(document.getElementById('update_gh_username')); // Update
+        let gh_username = document.getElementById('github_username').value;
+
+        fetch(`https://api.github.com/users/${gh_username}`).then(response => response.json())
+            .then(data => {
+                if (data.message == 'Not Found') {
+                    createAlertMessage('error', "GitHub Username Does Not Exist!");
+                    removeLoaderUI(document.getElementById('update_gh_username'), "Update");
+                    return null;
+                }
+
+                // Check if any Other User is there with this username!
+                let csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value; // Add `{% csrf_token %}` in your HTML somewhere above this line of code
+                let form = new FormData(); // Add Data to be sent to this 'form'
+
+                form.append('gh_username', gh_username);
+
+                fetch(`gh_usernameexists`,
+                    {
+                        method: 'POST',
+                        body: form,
+                        headers: {
+                            'Accept': 'multipart/form-data, application/json, text/plain, */*',
+                            "X-CSRFToken": csrftoken
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+
+                        if (data.SUCCESS != true){
+                            for (errorId in data.ERRORS){
+                                createAlertMessage('error', data.ERRORS[errorId]);
+                                removeLoaderUI(document.getElementById('update_gh_username'), "Update");
+                                return null;
+                            }
+                        }
+                        else{
+                            document.getElementById('developer_form').submit();
+                        }
+
+                    });
+
+            });
     }
 
 </script>
