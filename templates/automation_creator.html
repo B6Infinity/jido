@@ -25,15 +25,15 @@
     let doOctoAnimations = true;
     function showDeveloperForm() {
         doOctoAnimations = false;
-        document.getElementById('interactive_gitbg').style.backgroundPositionY = '150%';
+        document.getElementById('interactive_gitbg').style.backgroundPositionY = '40vh';
         document.getElementById('developer_form').style.display = 'block';
     }
     // UI for Octocat
     document.getElementById('show_octocat').onmouseover = () => {
-        if (doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '200%';
+        if (doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '55vh';
     }
     document.getElementById('show_octocat').onmouseout = () => {
-        if (doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '220%';
+        if (doOctoAnimations) document.getElementById('interactive_gitbg').style.backgroundPositionY = '68vh';
     }
 
     function submitGitHubUsername() {

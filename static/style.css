@@ -534,13 +534,10 @@ button {
 #interactive_gitbg {
     background-color: #181818;
     background-image: url('https://wallpaperaccess.com/full/3415005.jpg');
-    background-position: 150% 220%;
+    background-position: 60vw 68vh;
     transition: 0.1s;
     background-size: 60%;
     background-repeat: no-repeat;
-}
-.show_octocat:hover + #interactive_gitbg{
-    background-position: 150% 200%;
 }
 
 
