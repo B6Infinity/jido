@@ -1,0 +1,11 @@
+{
+    "None": "-NONE-",
+    "Windows10x86": "Windows 10 (32-bit)",
+    "Windows10x64": "Windows 10 (64-bit)",
+    "Windows7x86": "Windows 7 (32-bit)",
+    "Windows7x64": "Windows 7 (64-bit)",
+    "Ubuntu": "Ubuntu",
+    "KaliLinux": "Kali Linux",
+    "macOS": "macOS",
+    "RaspbianOS": "Raspbian OS"
+}

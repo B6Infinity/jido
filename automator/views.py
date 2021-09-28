@@ -1,3 +1,4 @@
+import json
 from automator.models import UserProfile
 from django.core.checks.messages import ERROR
 from django.http.response import JsonResponse
@@ -148,6 +149,15 @@ def automationcreator(request):
         return redirect('loginorsignup')
 
     
+    # Import The Variables from the files into VARs
+    with open('automator/PROGRAMMING_LANGUAGES.json', 'r') as f:
+        PARAMETERS['PROGRAMMING_LANGUAGES'] = json.load(f)
+        del PARAMETERS['PROGRAMMING_LANGUAGES']['None']
+
+    with open('automator/OS_PLATFORMS.json', 'r') as f:
+        PARAMETERS['OS_PLATFORMS'] = json.load(f)
+        del PARAMETERS['OS_PLATFORMS']['None']
+
 
     return render(request, 'automation_creator.html', PARAMETERS)
 

@@ -125,6 +125,32 @@ input::-ms-input-placeholder {
     color: black;
 }
 
+
+select:hover {
+    background-color: #888;
+}
+
+select:required {
+    border: 1px solid var(--YELLOWISH__fade1);
+}
+
+select:focus {
+    transform: translate(-3px, -3px);
+    background-color: var(--ORANGEISH__fade1);
+    font-weight: 500;
+}
+
+select {
+    transition: 0.2s;
+    border: none;
+    outline: none;
+    padding: 5px;
+    margin: 3px;
+    border-radius: 5px;
+    background-color: #666;
+    width: 250px;
+}
+
 input:hover {
     background-color: #888;
 }
@@ -389,7 +415,9 @@ button {
 }
 
 .loading-gif-img {
-    width: 100%;
+    height: 120%;
+    object-fit: contain;
+
 }
 
 /* ALERT BOX */
@@ -539,6 +567,16 @@ button {
     background-size: 60%;
     background-repeat: no-repeat;
 }
+
+#github_repositories{
+    width: 60%;
+    height: 80px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #000000;
+}
+
 
 
 /* FOR PHONES */

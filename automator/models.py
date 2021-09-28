@@ -1,5 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
+import json
+
+# VARs
+
+PROGRAMMING_LANGUAGES = []
+
+OS_PLATFORMS = []
+
+# Import The Variables from the files into VARs
+with open('automator/PROGRAMMING_LANGUAGES.json', 'r') as f:
+    programming_languages = json.load(f)
+with open('automator/OS_PLATFORMS.json', 'r') as f:
+    os_platforms = json.load(f)
+
+for language in programming_languages:
+    PROGRAMMING_LANGUAGES.append((language, programming_languages[language]))
+
+for platform in os_platforms:
+    OS_PLATFORMS.append((platform, os_platforms[platform]))
+
+
+
+
 
 # Create your models here.
 
@@ -35,5 +58,21 @@ class UserProfile(models.Model):
         return str(self.user) + f" - {self.github_username}"
 
 
+class Command(models.Model):
+    command_string = models.CharField(max_length=90)
+
 class Automation(models.Model):
-    pass
+
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    brief_explanation = models.TextField(max_length=150, null=False)
+    programming_language = models.CharField(max_length=90, choices=PROGRAMMING_LANGUAGES, default='None')
+
+    platform = models.CharField(max_length=90, choices=OS_PLATFORMS, default='None')
+
+    github_repo_URL = models.TextField()
+
+
+    commands = models.ManyToManyField(Command, related_name="automation")
+
+
+    

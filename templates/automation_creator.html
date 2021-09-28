@@ -68,14 +68,14 @@
                     .then(data => {
                         console.log(data);
 
-                        if (data.SUCCESS != true){
-                            for (errorId in data.ERRORS){
+                        if (data.SUCCESS != true) {
+                            for (errorId in data.ERRORS) {
                                 createAlertMessage('error', data.ERRORS[errorId]);
                                 removeLoaderUI(document.getElementById('update_gh_username'), "Update");
                                 return null;
                             }
                         }
-                        else{
+                        else {
                             document.getElementById('developer_form').submit();
                         }
 
@@ -87,7 +87,46 @@
 </script>
 
 {% else %}
-IS DEV
+<div class="slate-container">
+
+    <h3 class="fnt-med">Create a new Automation to help the World</h3><br><br>
+
+    <form action="" method="post" id="automation_form">
+
+
+        <input style="width: 60%;" type="text" name="brief_explanation" id="brief_explanation"
+            placeholder="A brief Explanation of 150 words" required><br><br>
+
+            
+        <select style="width: 61%;" name="languagewrittenin" id="languagewrittenin" required>
+            <option value="None" selected disabled>Choose the Programming Language</option>
+                {% for language, show in PROGRAMMING_LANGUAGES.items %}
+                    <option value="{{language}}">{{show}}</option>
+                {% endfor %}
+        </select><br><br>
+        
+        
+        <select style="width: 61%;" name="platform_os" id="platform_os" required>
+            <option value="None" selected disabled>Choose the Platform OS</option>
+                {% for os, show in OS_PLATFORMS.items %}
+                    <option value="{{os}}">{{show}}</option>
+                {% endfor %}
+        </select><br><br>
+
+        <input style="width: 60%;" type="text" name="github_repo_URL" id="github_repo_URL"
+            placeholder="Choose your public GitHub Repository">
+        
+            <div id="github_repositories">
+                
+            </div>
+            
+        <br><br>
+
+        
+
+
+    </form>
+</div>
 
 
 {% endif %}
