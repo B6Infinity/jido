@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import requests
 
 # Create your views here.
 def home(request):
@@ -85,9 +86,24 @@ def handlesignup(request):
         if agreed2TNC != 'on':
             ERROR_COUNT += 1
             messages.error(request, "You must agree to the <a href='#'>Terms and Conditions</a>")
+        
+        # Check the GitHub Username
+        if len(github_username.strip()) != 0:
+            url = f'https://api.github.com/users/{github_username}'
+            response_from_githubAPI = requests.get(url=url).json()
+            if 'message' in response_from_githubAPI:
+                if response_from_githubAPI["message"] == 'Not Found':
+                    ERROR_COUNT += 1
+                    messages.error(request, "GitHub Username does not exist!")
+            elif 'login' not in response_from_githubAPI:
+                ERROR_COUNT += 1
+                messages.error(request, "GitHub Username does not exist!")
+
+            
+
 
         if ERROR_COUNT != 0:
-            return redirect('signuporlogin')
+            return redirect('loginorsignup')
 
         # CREATE USER NOW
 
