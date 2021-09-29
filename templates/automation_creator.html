@@ -114,10 +114,12 @@
         </select><br><br>
 
         <input style="width: 60%;" type="text" name="github_repo_URL" id="github_repo_URL"
-            placeholder="Choose your public GitHub Repository">
+            placeholder="Choose your public GitHub Repository" required>
         
             <div id="github_repositories">
-                
+                <div class="github_repo orange_neon">
+                    HUI
+                </div>
             </div>
             
         <br><br>
@@ -127,7 +129,34 @@
 
     </form>
 </div>
+<script>
+    let gh_username = '{{GH_USERNAME}}';
+    let url = `https://api.github.com/users/${gh_username}/repos`;
 
+    // Get All The Public Repositories of the user
+    fetch(url).then(response => response.json()).then(data => {
+        console.log(data[0]);
+        for(let repoindex in data){
+            if (!data[repoindex]["disabled"] && !data[repoindex]["archived"]){
+                console.log(data[repoindex]["name"]);
+
+                let repo_parent_container = document.getElementById('github_repositories');
+                repo_parent_container.innerHTML += `
+                
+                <div class="github_repo orange_neon">
+                    ${data[repoindex]["name"]}
+                </div>
+                
+                
+                `;
+
+            }
+        }
+    });
+
+
+    
+</script>
 
 {% endif %}
 {% endblock body %}

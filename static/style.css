@@ -125,7 +125,6 @@ input::-ms-input-placeholder {
     color: black;
 }
 
-
 select:hover {
     background-color: #888;
 }
@@ -332,6 +331,7 @@ button {
     background-color: #202020;
     padding: 10px;
     margin: 10px;
+    overflow-y: auto;
     height: 80vh;
     width: 96%;
     border-radius: 3px;
@@ -417,7 +417,6 @@ button {
 .loading-gif-img {
     height: 120%;
     object-fit: contain;
-
 }
 
 /* ALERT BOX */
@@ -558,7 +557,6 @@ button {
 
 /* ALERT BOX END */
 
-
 #interactive_gitbg {
     background-color: #181818;
     background-image: url('https://wallpaperaccess.com/full/3415005.jpg');
@@ -568,16 +566,31 @@ button {
     background-repeat: no-repeat;
 }
 
-#github_repositories{
+#github_repositories {
     width: 60%;
-    height: 80px;
+    height: 160px;
     padding: 5px;
     margin: 5px;
     border-radius: 5px;
-    background-color: #000000;
+    background-color: #171515;
+    overflow-y: auto;
+    resize: vertical;
 }
 
+.github_repo:hover {
+    background-color: #303030;
 
+}
+.github_repo {
+    padding: 5px;
+    background-color: #000000;
+    border-radius: 3px;
+    font-weight: 600;
+    transition: 0.2s;
+    user-select: none;
+    font-size: 15px;
+    margin: 5px 0;
+}
 
 /* FOR PHONES */
 

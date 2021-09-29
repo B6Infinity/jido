@@ -143,7 +143,8 @@ def updateusertodev(request):
 # Applicative
 def automationcreator(request):
     if request.user.is_authenticated:
-        PARAMETERS = {"USER_IS_DEV": UserProfile.objects.get(user=request.user).is_developer}
+        user_profile = UserProfile.objects.get(user=request.user)
+        PARAMETERS = {"USER_IS_DEV": user_profile.is_developer}
     else:
         messages.info(request, "You need to login first!")
         return redirect('loginorsignup')
@@ -157,6 +158,9 @@ def automationcreator(request):
     with open('automator/OS_PLATFORMS.json', 'r') as f:
         PARAMETERS['OS_PLATFORMS'] = json.load(f)
         del PARAMETERS['OS_PLATFORMS']['None']
+
+    if PARAMETERS['USER_IS_DEV']:
+        PARAMETERS['GH_USERNAME'] = user_profile.github_username
 
 
     return render(request, 'automation_creator.html', PARAMETERS)
