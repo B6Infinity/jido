@@ -69,8 +69,9 @@ class Automation(models.Model):
 
     platform = models.CharField(max_length=90, choices=OS_PLATFORMS, default='None')
 
-    github_repo_URL = models.TextField()
+    github_repo_URL = models.CharField(max_length=170)
 
+    readme = models.TextField(default="", blank=True)
 
     commands = models.ManyToManyField(Command, related_name="automation")
 

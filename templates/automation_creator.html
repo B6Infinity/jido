@@ -97,65 +97,92 @@
         <input style="width: 60%;" type="text" name="brief_explanation" id="brief_explanation"
             placeholder="A brief Explanation of 150 words" required><br><br>
 
-            
+
         <select style="width: 61%;" name="languagewrittenin" id="languagewrittenin" required>
             <option value="None" selected disabled>Choose the Programming Language</option>
-                {% for language, show in PROGRAMMING_LANGUAGES.items %}
-                    <option value="{{language}}">{{show}}</option>
-                {% endfor %}
+            {% for language, show in PROGRAMMING_LANGUAGES.items %}
+            <option value="{{language}}">{{show}}</option>
+            {% endfor %}
         </select><br><br>
-        
-        
+
+
         <select style="width: 61%;" name="platform_os" id="platform_os" required>
             <option value="None" selected disabled>Choose the Platform OS</option>
-                {% for os, show in OS_PLATFORMS.items %}
-                    <option value="{{os}}">{{show}}</option>
-                {% endfor %}
+            {% for os, show in OS_PLATFORMS.items %}
+            <option value="{{os}}">{{show}}</option>
+            {% endfor %}
         </select><br><br>
 
         <input style="width: 60%;" type="text" name="github_repo_URL" id="github_repo_URL"
             placeholder="Choose your public GitHub Repository" required>
-        
-            <div id="github_repositories">
-                <div class="github_repo orange_neon">
-                    HUI
-                </div>
-            </div>
-            
-        <br><br>
 
-        
+        <div id="github_repositories">
+            <!-- GitHub API fetch and paste Repos here -->
+        </div>
+        <br>
 
+        <textarea style="width: 60%; height: 100px;" type="text" name="readme" id="readme"
+            placeholder="A descriptive README.md please"></textarea>
+
+            <br><br>
+
+        <h5 class="fnt-x-small">Choose upto 3 Commands (Imagine you are talking to an AI, type command should the AI get to execute this Automation):</h5>
+        <div id="commands">
+            <input class="command" placeholder="FIX THE LED"><br>
+            <input class="command" placeholder="FIX THE BULB"><br>
+            <input class="command" placeholder="FIX THE LIGHT"><br>
+        </div>
+        <style>
+            .command{
+                padding: 3px;
+                margin: 3px;
+                width: 90%;
+                background-color: #505050;
+                user-select: none;
+            }
+            #commands{
+                margin: 10px 0;
+                background-color: #151511;
+                border-radius: 3px;
+                padding: 5px;
+                width: 60%;
+            }
+        </style>
 
     </form>
 </div>
 <script>
     let gh_username = '{{GH_USERNAME}}';
     let url = `https://api.github.com/users/${gh_username}/repos`;
-
+    let GHLOAD_ENDMSG = 'Failed';
     // Get All The Public Repositories of the user
+    let repo_parent_container = document.getElementById('github_repositories');
+    pushLoaderUI(repo_parent_container);
     fetch(url).then(response => response.json()).then(data => {
-        console.log(data[0]);
-        for(let repoindex in data){
-            if (!data[repoindex]["disabled"] && !data[repoindex]["archived"]){
-                console.log(data[repoindex]["name"]);
+        // console.log(data[0]);
 
-                let repo_parent_container = document.getElementById('github_repositories');
+        GHLOAD_ENDMSG = '';
+        removeLoaderUI(repo_parent_container, '');
+
+        for (let repoindex in data) {
+            if (!data[repoindex]["disabled"] && !data[repoindex]["archived"]) {
+                // console.log(data[repoindex]);
+
                 repo_parent_container.innerHTML += `
                 
-                <div class="github_repo orange_neon">
+                <div class="github_repo orange_neon" ondblclick="window.open('https://github.com/${data[repoindex]["full_name"]}', '_blank')">
                     ${data[repoindex]["name"]}
                 </div>
-                
-                
                 `;
 
             }
         }
     });
+    if (GHLOAD_ENDMSG != '') {
+        // removeLoaderUI(repo_parent_container, GHLOAD_ENDMSG);
+    }
 
 
-    
 </script>
 
 {% endif %}
