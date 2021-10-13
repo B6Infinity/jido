@@ -192,11 +192,11 @@ def createautomation(request):
             command_list.append(c)
 
         if command_2.strip() != '':
-            c = Command.objects.get_or_create(command_string=command_1)[0]
+            c = Command.objects.get_or_create(command_string=command_2)[0]
             command_list.append(c)
 
         if command_3.strip() != '':
-            c = Command.objects.get_or_create(command_string=command_1)[0]
+            c = Command.objects.get_or_create(command_string=command_3)[0]
             command_list.append(c)
 
         newAutomation.commands.add(*command_list)
