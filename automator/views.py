@@ -1,5 +1,5 @@
 import json
-from automator.models import UserProfile
+from automator.models import Automation, Command, UserProfile
 from django.core.checks.messages import ERROR
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
@@ -10,6 +10,9 @@ from django.contrib import messages
 import requests
 
 # Create your views here.
+
+#Functionalities
+
 def home(request):
     
     return render(request, 'home.html')
@@ -164,6 +167,44 @@ def automationcreator(request):
 
 
     return render(request, 'automation_creator.html', PARAMETERS)
+
+def createautomation(request):
+    if request.method == 'POST' and UserProfile.objects.get(user=request.user).is_developer:
+        brief_explanation = request.POST['brief_explanation']
+        programming_language = request.POST['languagewrittenin']
+        platform = request.POST['platform_os']
+        github_repo_URL = request.POST['github_repo_URL']
+        readme = request.POST['readme']
+
+        newAutomation = Automation.objects.create(author=request.user, brief_explanation=brief_explanation, programming_language=programming_language, platform=platform, github_repo_URL=github_repo_URL, readme=readme)
+
+
+
+        # Create The Commands
+        command_1 = request.POST['command_1']
+        command_2 = request.POST['command_2']
+        command_3 = request.POST['command_3']
+
+        command_list = []
+
+        if command_1.strip() != '':
+            c = Command.objects.get_or_create(command_string=command_1)[0]
+            command_list.append(c)
+
+        if command_2.strip() != '':
+            c = Command.objects.get_or_create(command_string=command_1)[0]
+            command_list.append(c)
+
+        if command_3.strip() != '':
+            c = Command.objects.get_or_create(command_string=command_1)[0]
+            command_list.append(c)
+
+        newAutomation.commands.add(*command_list)
+
+
+        return redirect('myprofile')
+
+
 
 
 # APIs

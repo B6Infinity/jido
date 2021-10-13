@@ -60,6 +60,8 @@ class UserProfile(models.Model):
 
 class Command(models.Model):
     command_string = models.CharField(max_length=90)
+    def __str__(self) -> str:
+        return self.command_string
 
 class Automation(models.Model):
 
@@ -74,6 +76,9 @@ class Automation(models.Model):
     readme = models.TextField(default="", blank=True)
 
     commands = models.ManyToManyField(Command, related_name="automation")
+
+    def __str__(self) -> str:
+        return f"{self.author.username} - {self.brief_explanation}"
 
 
     

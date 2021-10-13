@@ -91,11 +91,11 @@
 
     <h3 class="fnt-med">Create a new Automation to help the World</h3><br><br>
 
-    <form action="" method="post" id="automation_form">
-
+    <form action="/createautomation" method="post" id="automation_form">
+        {% csrf_token %}
 
         <input style="width: 60%;" type="text" name="brief_explanation" id="brief_explanation"
-            placeholder="A brief Explanation of 150 words" required><br><br>
+            placeholder="A brief Explanation of 150 words" required autocomplete="off"><br><br>
 
 
         <select style="width: 61%;" name="languagewrittenin" id="languagewrittenin" required>
@@ -114,7 +114,7 @@
         </select><br><br>
 
         <input style="width: 60%;" type="text" name="github_repo_URL" id="github_repo_URL"
-            placeholder="Choose your public GitHub Repository" required>
+            placeholder="Choose your public GitHub Repository" required autocomplete="off">
 
         <div id="github_repositories">
             <!-- GitHub API fetch and paste Repos here -->
@@ -128,15 +128,15 @@
 
         <h5 class="fnt-x-small">Choose upto 3 Commands (Imagine you are talking to an AI, type command should the AI get to execute this Automation):</h5>
         <div id="commands">
-            <input class="command" placeholder="FIX THE LED"><br>
-            <input class="command" placeholder="FIX THE BULB"><br>
-            <input class="command" placeholder="FIX THE LIGHT"><br>
+            <input class="command" name="command_1" placeholder="FIX THE LED" required autocomplete="off"><br>
+            <input class="command" name="command_2" placeholder="FIX THE BULB" autocomplete="off"><br>
+            <input class="command" name="command_3" placeholder="FIX THE LIGHT" autocomplete="off"><br>
         </div>
         <style>
             .command{
                 padding: 3px;
                 margin: 3px;
-                width: 90%;
+                width: 97%;
                 background-color: #505050;
                 user-select: none;
             }
@@ -149,6 +149,8 @@
             }
         </style>
 
+        <button type="submit">Create</button>
+        
     </form>
 </div>
 <script>

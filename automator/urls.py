@@ -18,6 +18,7 @@ urlpatterns = [
 
     # Applicative
     path('automationcreator', view=views.automationcreator, name='automationcreator'),
+    path('createautomation', view=views.createautomation, name='createautomation'),
 
 
 
