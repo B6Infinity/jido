@@ -623,6 +623,74 @@ button {
     /* word-wrap: normal; */
 }
 
+.profile-stat-data:hover{
+    color: var(--YELLOWISH);
+}
+.profile-stat-data{
+    transition: 0.2s;
+    font-weight: 600;
+    font-size: 25px;
+    padding: 15px;
+    color: var(--YELLOWISH__fade1);
+}
+.profile-stat-heading{
+    font-weight: 400;
+    font-size: 18px;
+}
+.profile-stat{
+    user-select: none;
+    flex-grow: 1;
+    text-align: center;
+    padding-top: 20px;
+}
+.profile-head:hover {
+    box-shadow: 0 8px 6px -5px var(--ORANGEISH);
+    background: linear-gradient(180deg, #000 40%, #121212 100%);
+
+}
+.profile-head {
+    transition: 0.2s;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(180deg, #000 35%, #121212 100%);
+    
+    box-shadow: 0 8px 6px -7px var(--ORANGEISH__fade1);
+    /* padding-top: 80px; */
+    position: relative;
+}
+
+#ProfilePicture_MAIN:active {
+    transform: rotate(10deg);
+    border-radius: 40%;
+}
+#ProfilePicture_MAIN:hover {
+    width: 125px;
+    height: 125px;
+    box-shadow: 2px 2px 3px black;
+}
+#ProfilePicture_MAIN {
+    transition: 0.2s;
+    user-select: none;
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    bottom: -55px;
+    left: 20%;
+    border-radius: 50%;
+}
+#buttons-container{
+    position: absolute;
+    bottom: -25px; 
+    right: 10%;
+}
+.profile-btn:hover{
+    border: 1px solid var(--YELLOWISH__fade2);
+    
+}
+.profile-btn{
+    border: 2px solid var(--YELLOWISH);
+}
+
 /* FOR PHONES */
 
 @media only screen and (max-device-width: 640px) {
@@ -651,6 +719,39 @@ button {
         padding: 0%;
         width: 100%;
     }
+    .profile-head{
+        height: 150px;
+    }
+    .profile-stat-heading{
+        font-size: 14px;
+    }
+    .profile-stat-data{
+        font-size: 22px;
+    }
+    #ProfilePicture_MAIN:hover{
+        width: 105px;
+        height: 105px;
+    }
+    #ProfilePicture_MAIN{
+        width: 100px;
+        left: 5%;
+        height: 100px;
+    }
+    #buttons-container{
+        text-align: right;
+        right: 5%;
+        bottom: -35px;
+    }
+    .profile-btn{
+        margin: 1px;
+        font-size: 10px;
+        align-self: right;
+        display: block;
+        align-self: 0;
+        width: 100%;
+        padding: 5px;
+    }
+    
 }
 
 /* SCROLLBAR */

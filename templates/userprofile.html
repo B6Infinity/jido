@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
+{% load b6_filters %}
 {% block title %}My Profile{% endblock title %}
 {% block body %}
 
-USER PROFILE - {{user}} <br>
+<!-- USER PROFILE - {{user}} <br>
 <a href="/automationcreator">Create</a><br>
 <br><br>
 
-<a href="/logout">Logout</a><br>
+<a href="/logout">Logout</a><br> -->
+
+<div class="profile-head">
+    <div class="flex-stats-container flex-row">
+        <div class="profile-stat">
+            <div class="profile-stat-heading">Automations</div>
+            <div class="profile-stat-data">3</div>
+
+        </div>
+        <div class="profile-stat">
+            <div class="profile-stat-heading">Reputation</div>
+            <div class="profile-stat-data">15</div>
+
+        </div>
+        <div class="profile-stat">
+            <div class="profile-stat-heading">--STAT--</div>
+            <div class="profile-stat-data">NaN</div>
+
+        </div>
+    </div>
+
+    <img id="ProfilePicture_MAIN" src="{{user|getProfilePictureURL}}" />
+    <div id="buttons-container">
+        <button class="profile-btn" type="button">Edit Profile</button>
+        <button class="profile-btn" type="button">Marked Automations</button>
+    </div>
+</div>
+<style>
+    
+</style>
+
 
 
 {% endblock body %}
