@@ -27,16 +27,24 @@
 
         </div>
     </div>
+    <div id="profilePicture-holder">
+        <img id="ProfilePicture_MAIN" src="{{user|getProfilePictureURL}}" />
+        <div id="username">
+            <span style="font-size: 17px;">{{user}}</span><br>{{user.first_name}}
+        </div>
 
-    <img id="ProfilePicture_MAIN" src="{{user|getProfilePictureURL}}" />
+    </div>
+
+
     <div id="buttons-container">
         <button class="profile-btn" type="button">Edit Profile</button>
-        <button class="profile-btn" type="button">Marked Automations</button>
+        <button onclick="window.location.href='/logout'" class="profile-btn" type="button">Log Out</button>
     </div>
 </div>
-<style>
-    
-</style>
+
+<div style="width: 100%; height: 70px;"></div> <!-- MAKE SOME SPACE -->
+
+<h2 style="padding: 5px;">Automations</h2>
 
 
 

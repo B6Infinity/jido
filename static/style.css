@@ -634,6 +634,7 @@ button {
     color: var(--YELLOWISH__fade1);
 }
 .profile-stat-heading{
+    color: #afafaf;
     font-weight: 400;
     font-size: 18px;
 }
@@ -668,15 +669,18 @@ button {
     height: 125px;
     box-shadow: 2px 2px 3px black;
 }
-#ProfilePicture_MAIN {
-    transition: 0.2s;
+#profilePicture-holder{
     user-select: none;
     position: absolute;
-    width: 120px;
-    height: 120px;
     bottom: -55px;
     left: 20%;
+    
+}
+#ProfilePicture_MAIN {
     border-radius: 50%;
+    transition: 0.2s;
+    width: 120px;
+    height: 120px;
 }
 #buttons-container{
     position: absolute;
@@ -690,7 +694,16 @@ button {
 .profile-btn{
     border: 2px solid var(--YELLOWISH);
 }
-
+#username{
+    font-size: 20px;
+    font-weight: 500;
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    padding: 0 5px;
+    color: var(--ORANGEISH);
+    text-shadow: 2px 2px 5px black;
+}
 /* FOR PHONES */
 
 @media only screen and (max-device-width: 640px) {
@@ -743,7 +756,7 @@ button {
         bottom: -35px;
     }
     .profile-btn{
-        margin: 1px;
+        margin: 5px;
         font-size: 10px;
         align-self: right;
         display: block;
