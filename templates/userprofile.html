@@ -10,7 +10,9 @@
 <a href="/logout">Logout</a><br> -->
 
 <div class="profile-head">
+    {% if IS_DEVELOPER %}
     <div class="flex-stats-container flex-row">
+
         <div class="profile-stat">
             <div class="profile-stat-heading">Automations</div>
             <div class="profile-stat-data">3</div>
@@ -27,13 +29,33 @@
 
         </div>
     </div>
+    {% endif %}
     <div id="profilePicture-holder">
-        <img id="ProfilePicture_MAIN" src="{{user|getProfilePictureURL}}" />
+        
+        <img id="ProfilePicture_MAIN" src="{{user|getProfilePictureURL}}" {% if IS_DEVELOPER %} ondblclick="window.open('{{user|getGitHubURL}}', '_blank')" {% endif %}/>
+        
+
+
         <div id="username">
-            <span style="font-size: 17px;">{{user}}</span><br>{{user.first_name}}
+            <span style="font-size: 17px;">{{user}}</span><br>
+            {{user.first_name}}
+            <div id="user-badges">
+
+
+                <!-- Is Developer -->
+                {% if IS_DEVELOPER %}
+                <div class="tooltip">
+                    <img class="user-badge" src="https://img.icons8.com/ios-filled/50/26e07f/coffee.png"/>
+                    <div style="top: 25px; text-align: center;" class="tooltiptext">Developer</div>
+                </div>
+                {% endif %}
+            </div>
         </div>
 
     </div>
+    <style>
+        
+    </style>
 
 
     <div id="buttons-container">
@@ -46,6 +68,18 @@
 
 <h2 style="padding: 5px;">Automations</h2>
 
-
+{% for automation in AUTOMATIONS %}
+<div class="automation" onclick="window.location.href='/'">
+{{automation}}
+</div>
+{% endfor %}
+<style>
+    .automation{
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        background-color: #505050;
+    }
+</style>
 
 {% endblock body %}

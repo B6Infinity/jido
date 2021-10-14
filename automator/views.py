@@ -1,7 +1,7 @@
 import json
 from automator.models import Automation, Command, UserProfile
 from django.core.checks.messages import ERROR
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
@@ -11,7 +11,7 @@ import requests
 
 # Create your views here.
 
-#Functionalities
+# Pages
 
 def home(request):
     
@@ -27,7 +27,31 @@ def myprofile(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    return render(request, 'userprofile.html')
+    RESPONSE = {
+        "IS_DEVELOPER": UserProfile.objects.get(user=request.user).is_developer,
+        "AUTOMATIONS": Automation.objects.filter(author=request.user)[::-1]
+    }
+
+
+    return render(request, 'userprofile.html', RESPONSE)
+
+def viewprofile(request, username):
+    return HttpResponse(username+" Hajime Mashte!")
+
+def viewautomation(request, automationid):
+    if len(Automation.objects.filter(id=automationid)) == 0:
+        return HttpResponse("Could not find the automation you are looking for")
+    
+    automation = Automation.objects.filter(id=automationid).first
+    RESPONSE = {
+        "automation" : automation
+    }
+
+
+    return render(request, 'viewautomation.html', RESPONSE)
+
+
+#Functionalities
 
 def logoutuser(request):
     logout(request)
@@ -141,8 +165,6 @@ def updateusertodev(request):
         return redirect('automationcreator')
         
     
-    
-
 # Applicative
 def automationcreator(request):
     if request.user.is_authenticated:

@@ -3,9 +3,6 @@ from ..models import UserProfile
 
 register = template.Library()
 
-@register.filter
-def passer():
-    pass
 
 @register.filter
 def getProfilePictureURL(user):
@@ -13,3 +10,8 @@ def getProfilePictureURL(user):
 
     return profilepicURL
 
+@register.filter
+def getGitHubURL(user):
+    ghusername = UserProfile.objects.get(user=user).github_username
+
+    return f'https://github.com/{ghusername}/'
