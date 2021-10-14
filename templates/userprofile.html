@@ -69,7 +69,7 @@
 <h2 style="padding: 5px;">Automations</h2>
 
 {% for automation in AUTOMATIONS %}
-<div class="automation" onclick="window.location.href='/'">
+<div class="automation" onclick="window.location.href='/viewautomation-{{automation.id}}'">
 {{automation}}
 </div>
 {% endfor %}
