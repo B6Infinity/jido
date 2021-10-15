@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Chat{% endblock title %}
+{% block body %}
+
+
+
+<div style="margin: 5px; width: 97%; height: 81vh;" class="slate-container">
+    
+
+<div class="flex-row" style="height: 97%;">
+    <div id="chats-list">
+        {% for chat in CHATS %}
+        <div class="chat-head">
+            {{chat}}
+        </div>
+        {% endfor %}
+
+    </div>
+    <div id="active-chat">
+        
+    </div>
+</div>
+<style>
+    .chat-head:hover{
+        padding: 7px 4px;
+        box-shadow: 2px 2px 2px white;
+        background-color: #121212;
+        
+    }
+    .chat-head{
+        user-select: none;
+        background-color: #131313;
+        border-radius: 5px 0px 0px 0px;
+        box-shadow: 1px 1px 2px white;
+        transition: 0.2s;
+        margin: 2px 0;
+        padding: 4px;
+    }
+    .chat-head .active{
+        background-color: #101010;
+    }
+
+    #active-chat{
+        height: 100%;
+        flex-grow: 1;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #000;
+    }
+    #chats-list{
+        height: 100%;
+        width: 200px;
+    }
+</style>
+
+
+</div>
+{% endblock body %}

@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Manually Added
+
+    # jido - Apps
     'automator',
+    'chat',
+
+    # Third Party
     'channels',
 
 ]
