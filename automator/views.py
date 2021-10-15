@@ -226,7 +226,8 @@ def createautomation(request):
 
         return redirect('myprofile')
 
-
+    else:
+        return redirect('automationcreator')
 
 
 # APIs

@@ -66,7 +66,9 @@
 
 <div style="width: 100%; height: 70px;"></div> <!-- MAKE SOME SPACE -->
 
-<h2 style="padding: 5px;">Automations</h2>
+<h2 style="padding: 5px; display: inline-block;">Automations</h2>
+
+<button style="display: inline-block;" onclick="window.location.href='/automationcreator'"><span class="fas fa-plus"></span> Create</button>
 
 {% for automation in AUTOMATIONS %}
 <div class="automation" onclick="window.location.href='/viewautomation-{{automation.id}}'">
