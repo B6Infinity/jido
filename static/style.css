@@ -716,10 +716,63 @@ button {
 #user-badges {
     display: inline-block;
 }
+
 .user-badge {
     width: 18px;
-
 }
+
+.chat-head:hover {
+    padding: 7px 4px;
+    box-shadow: 2px 2px 2px white;
+    background-color: #121212;
+}
+
+.chat-head {
+    user-select: none;
+    background-color: #131313;
+    border-radius: 5px 0px 0px 0px;
+    box-shadow: 1px 1px 2px white;
+    transition: 0.2s;
+    margin: 2px 0;
+    padding: 4px;
+}
+
+.active_chat_head:hover {
+    background-color: #fff;
+}
+
+.active_chat_head {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000;
+}
+
+#active-chat {
+    height: 100%;
+    flex-grow: 1;
+    width: 80%;
+    overflow-y: auto;
+    
+    /* padding: 5px; */
+    border-radius: 5px;
+    background-color: #000;
+}
+
+#chats-list {
+    height: 100%;
+    width: 20%;
+}
+
+#active-chat-header:hover {
+    background-color: #151515;
+}
+
+#active-chat-header {
+    border-bottom: 2px solid var(--ORANGEISH);
+    height: 50px;
+    border-radius: 5px 5px 0 0;
+    background-color: #090909;
+}
+
 
 /* FOR PHONES */
 

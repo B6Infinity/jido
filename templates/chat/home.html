@@ -1,57 +1,176 @@
 {% extends 'base.html' %}
 {% block title %}Chat{% endblock title %}
 {% block body %}
-
-
+<script>let user = '{{user}}';</script>
+{% csrf_token %}
 
 <div style="margin: 5px; width: 97%; height: 81vh;" class="slate-container">
-    
 
-<div class="flex-row" style="height: 97%;">
-    <div id="chats-list">
-        {% for chat in CHATS %}
-        <div class="chat-head">
-            {{chat}}
+
+    <div class="flex-row" style="height: 97%;">
+        <div id="chats-list">
+            {% for chat in CHATS %}
+            <div class="chat-head" id="chat-{{chat.id}}" onclick="setActiveChat({{chat.id}});">
+                {{chat}}
+            </div>
+            {% endfor %}
+
         </div>
-        {% endfor %}
 
-    </div>
-    <div id="active-chat">
-        
-    </div>
-</div>
-<style>
-    .chat-head:hover{
-        padding: 7px 4px;
-        box-shadow: 2px 2px 2px white;
-        background-color: #121212;
-        
-    }
-    .chat-head{
-        user-select: none;
-        background-color: #131313;
-        border-radius: 5px 0px 0px 0px;
-        box-shadow: 1px 1px 2px white;
-        transition: 0.2s;
-        margin: 2px 0;
-        padding: 4px;
-    }
-    .chat-head .active{
-        background-color: #101010;
-    }
 
-    #active-chat{
-        height: 100%;
-        flex-grow: 1;
-        padding: 5px;
-        border-radius: 5px;
-        background-color: #000;
-    }
-    #chats-list{
-        height: 100%;
-        width: 200px;
-    }
-</style>
+        <div id="active-chat">
+            <div id="active-chat-header">
+
+            </div>
+
+            <div id="messages" class="flex-column">
+
+                <div class="message-wrapper">
+                    <div class="message outer_message" id="56">
+                        <div class="message-text">
+                            hi there!!!
+                        </div>
+
+                        <div class="message-sent-time">
+                            15:45 01.04.2020
+                        </div>
+
+                    </div>
+                </div>
+                <div class="message-wrapper">
+                    <div class="message outer_message" id="15">
+                        <div class="message-text">
+                            hi there!!!
+                        </div>
+
+                        <div class="message-sent-time" id="message-sent-time-56">
+                            15:45 01.04.2020
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="message-wrapper">
+                    <div class="message inner_message" id="35">
+                        <div class="message-text">
+                            Oh Hi!
+                        </div>
+
+                        <div class="message-sent-time" id="message-sent-time-35">
+                            15:45 01.04.2020
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-wrapper">
+                    <div class="message outer_message" id="45">
+                        <div class="message-text">
+                            LOL XD
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <style>
+        #messages {
+            overflow-y: auto;
+        }
+
+        .message-sent-time {
+            position: absolute;
+            font-size: 11px;
+            bottom: -7px;
+            right: 50%;
+            visibility: hidden;
+            color: #aeaeae;
+            font-weight: 700;
+        }
+
+        .message-wrapper {
+            width: 100%;
+            position: relative;
+        }
+
+
+        .message:hover .message-sent-time {
+            visibility: visible;
+        }
+        .message {
+            padding: 5px;
+            border-radius: 5px;
+            width: fit-content;
+            max-width: 40%;
+            color: black;
+            margin: 7px;
+        }
+
+        .inner_message {
+            float: right;
+            background-color: #202020;
+        }
+
+        .outer_message {
+            float: left;
+            background-color: var(--ORANGEISH);
+
+        }
+    </style>
+
+    <script>
+        let csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+        function setActiveChat(chat_id) {
+            try {
+                document.getElementsByClassName('active_chat_head')[0].classList.remove('active_chat_head');
+            } catch { };
+            document.getElementById('chat-' + chat_id).classList.add('active_chat_head');
+
+            fetchMessages(chat_id);
+        }
+
+
+        function fetchMessages(chat_id) {
+
+            let form = new FormData(); // Add Data to be sent to this 'form'
+
+            form.set('chat_id', chat_id)
+
+            fetch(`fetch_messages`,
+                {
+                    method: 'POST',
+                    body: form,
+                    headers: {
+                        'Accept': 'multipart/form-data, application/json, text/plain, */*',
+                        "X-CSRFToken": csrftoken
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+                    if (data.SUCCESS) {
+                        pasteMessages(data.MESSAGES);
+                    }
+
+                });
+        }
+
+        function pasteMessages(MESSAGES) {
+
+
+            for (let message in MESSAGES) {
+                console.log(MESSAGES[message]);
+            }
+
+
+            let active_chat = document.getElementById("active-chat");
+            active_chat.scrollTop = active_chat.scrollHeight;
+        }
+
+    </script>
+
 
 
 </div>
