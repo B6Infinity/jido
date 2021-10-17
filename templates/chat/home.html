@@ -26,18 +26,9 @@
             <div id="messages" class="flex-column">
 
                 <div class="message-wrapper">
-                    <div class="message outer_message" id="56">
-                        <div class="message-text">
-                            hi there!!!
-                        </div>
-
-                        <div class="message-sent-time">
-                            15:45 01.04.2020
-                        </div>
-
+                    <div class="message-author">
+                        <img src="http://127.0.0.1:8000/username_profilepic-bravo6" alt="">
                     </div>
-                </div>
-                <div class="message-wrapper">
                     <div class="message outer_message" id="15">
                         <div class="message-text">
                             hi there!!!
@@ -59,6 +50,7 @@
                         <div class="message-sent-time" id="message-sent-time-35">
                             15:45 01.04.2020
                         </div>
+
                     </div>
                 </div>
 
@@ -67,10 +59,14 @@
                         <div class="message-text">
                             LOL XD
                         </div>
+                        <div class="message-sent-time" id="message-sent-time-35">
+                            15:45 01.04.2020
+                        </div>
                     </div>
                 </div>
 
             </div>
+
 
         </div>
     </div>
@@ -79,10 +75,20 @@
             overflow-y: auto;
         }
 
+        .message-author img{
+            width: 20px;
+            border-radius: 50%;
+        }
+        .message-author {
+            margin: 7px;
+            padding: 5px;
+            position: absolute;
+        }
+
         .message-sent-time {
             position: absolute;
             font-size: 11px;
-            bottom: -7px;
+            bottom: 25%;
             right: 50%;
             visibility: hidden;
             color: #aeaeae;
@@ -98,6 +104,7 @@
         .message:hover .message-sent-time {
             visibility: visible;
         }
+
         .message {
             padding: 5px;
             border-radius: 5px;
@@ -110,9 +117,11 @@
         .inner_message {
             float: right;
             background-color: #202020;
+            margin-right: 40px;
         }
 
         .outer_message {
+            margin-left: 40px;
             float: left;
             background-color: var(--ORANGEISH);
 

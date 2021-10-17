@@ -29,6 +29,7 @@ urlpatterns = [
     path('gh_usernameexists', view=views.gh_usernameexists, name='gh_usernameexists'),
 
     # STATIC APIs
+    path('username_profilepic-<str:username>', view=views.get_username_profilepic, name='get_username_profilepic'),
 
 
 ]

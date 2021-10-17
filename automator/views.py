@@ -256,3 +256,8 @@ def gh_usernameexists(request):
 
         return JsonResponse(RESPONSE)
 
+def get_username_profilepic(request, username):
+    url = UserProfile.objects.get(user=User.objects.get(username=username)).profilePic_url
+    
+    return redirect(url)
+
