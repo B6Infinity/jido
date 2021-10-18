@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     
     # Pages
-    path('', view=views.home, name='home'),
+    path('', view=views.home, name='chat_home'),
 
     # APIs
     path('fetch_messages', view=views.fetch_messages, name='fetch_messages'),

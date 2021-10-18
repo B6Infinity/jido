@@ -835,6 +835,42 @@ button {
 
 }
 
+.sendmessage_hud_icon{
+    transition: 0.2s;
+}
+.sendmessage_hud_icon:hover{
+    transform: translate(-2px, -2px);
+    color: var(--ORANGEISH);
+}
+.sendmessage_hud_icon:active{
+    transform: translate(2px, 2px);
+}
+#messages {
+    overflow-y: auto;
+}
+
+#sendmessage_hud {
+    padding: 5px;
+    display: flex;
+    margin: 3px;
+}
+
+#sendmessage_textarea {
+    width: 100%;
+    margin: 0%;
+    height: 20px;
+    resize: none;
+
+}
+
+#send_msg {
+    font-size: 25px;
+    vertical-align: middle;
+    padding: 0 5px;
+    vertical-align: middle;
+    /* background-color: blue; */
+}
+
 /* FOR PHONES */
 
 @media only screen and (max-device-width: 640px) {
