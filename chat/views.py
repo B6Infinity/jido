@@ -37,6 +37,7 @@ def fetch_messages(request):
 
         RESPONSE = {"SUCCESS": True, "ERRORS": []}
 
+        # messages = Message.objects.filter(chat=chat)[::-1][:2]
         messages = Message.objects.filter(chat=chat)
 
         RESPONSE['MESSAGES'] = {}

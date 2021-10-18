@@ -774,6 +774,67 @@ button {
 }
 
 
+.message-author img {
+    width: 20px;
+    border-radius: 50%;
+}
+
+.inner_message-author {
+    right: 0%;
+}
+
+.outer_message-author {
+    left: 0%;
+}
+
+.message-author {
+    margin: 7px;
+    padding: 5px;
+    position: absolute;
+}
+
+.message-sent-time {
+    position: absolute;
+    font-size: 11px;
+    bottom: 25%;
+    right: 50%;
+    visibility: hidden;
+    color: #aeaeae;
+    font-weight: 700;
+}
+
+.message-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+
+.message:hover .message-sent-time {
+    visibility: visible;
+}
+
+.message {
+    padding: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    max-width: 40%;
+    color: black;
+    margin: 7px;
+}
+
+.inner_message {
+    float: right;
+    background-color: #202020;
+    margin-right: 40px;
+}
+
+.outer_message {
+    margin-left: 40px;
+    float: left;
+    background-color: var(--ORANGEISH);
+
+}
+
 /* FOR PHONES */
 
 @media only screen and (max-device-width: 640px) {
