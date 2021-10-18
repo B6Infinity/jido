@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Chat{% endblock title %}
 {% block body %}
-<script>let user = '{{user}}';</script>
 {% csrf_token %}
 
 <div style="margin: 5px; width: 97%; height: 81vh;" class="slate-container">
@@ -25,45 +24,8 @@
 
             <div id="messages" class="flex-column">
 
-                <div class="message-wrapper">
-                    <div class="message-author">
-                        <img src="http://127.0.0.1:8000/username_profilepic-bravo6" alt="">
-                    </div>
-                    <div class="message outer_message" id="15">
-                        <div class="message-text">
-                            hi there!!!
-                        </div>
 
-                        <div class="message-sent-time" id="message-sent-time-56">
-                            15:45 01.04.2020
-                        </div>
 
-                    </div>
-                </div>
-
-                <div class="message-wrapper">
-                    <div class="message inner_message" id="35">
-                        <div class="message-text">
-                            Oh Hi!
-                        </div>
-
-                        <div class="message-sent-time" id="message-sent-time-35">
-                            15:45 01.04.2020
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="message-wrapper">
-                    <div class="message outer_message" id="45">
-                        <div class="message-text">
-                            LOL XD
-                        </div>
-                        <div class="message-sent-time" id="message-sent-time-35">
-                            15:45 01.04.2020
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
@@ -75,10 +37,19 @@
             overflow-y: auto;
         }
 
-        .message-author img{
+        .message-author img {
             width: 20px;
             border-radius: 50%;
         }
+
+        .inner_message-author {
+            right: 0%;
+        }
+
+        .outer_message-author {
+            left: 0%;
+        }
+
         .message-author {
             margin: 7px;
             padding: 5px;
@@ -168,14 +139,49 @@
 
         function pasteMessages(MESSAGES) {
 
+            let chatHTML = ``;
 
             for (let message in MESSAGES) {
-                console.log(MESSAGES[message]);
+                let msg = MESSAGES[message];
+                console.log(msg);
+
+                // Vars
+                let oorin = 'outer';
+
+                if (msg.AUTHOR == '{{user}}') {
+                    oorin = 'inner';
+                }
+
+                let htmlsnippet = `
+                <div class="message-wrapper">
+                    <div class="message-author ${oorin}_message-author ">
+                        <img src="http://127.0.0.1:8000/username_profilepic-${msg.AUTHOR}" alt="">
+                    </div>
+                    <div class="message ${oorin}_message" id="${msg.ID}">
+                        <div class="message-text">
+                            ${msg.TEXT}
+                        </div>
+
+                        <div class="message-sent-time" id="message-sent-time-${msg.ID}">
+                            ${msg.TIME_SENT}
+                        </div>
+
+                    </div>
+                </div>
+                `;
+
+                chatHTML += htmlsnippet;
+
+
             }
 
+            document.getElementById('messages').innerHTML = chatHTML;
 
             let active_chat = document.getElementById("active-chat");
             active_chat.scrollTop = active_chat.scrollHeight;
+
+
+
         }
 
     </script>

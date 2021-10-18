@@ -43,9 +43,10 @@ def fetch_messages(request):
 
         for message in messages:
             RESPONSE['MESSAGES'][str(message.id)] = {
+                "ID": message.id,
                 "TEXT": message.message,
                 "AUTHOR": message.author.username,
-                "TIME_SENT": message.time_sent
+                "TIME_SENT": message.time_sent.strftime("%H:%m %d.%m.%y")
             }
             
 
