@@ -5,7 +5,7 @@ import automator.routing
 application = ProtocolTypeRouter({
     'websocket': AuthMiddlewareStack(
         URLRouter(
-            automator.routing.websocket_urlpatterns
+            automator.routing.websocket_urlpatterns,
         )
     )
 })
