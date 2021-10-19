@@ -29,7 +29,8 @@ def myprofile(request):
 
     RESPONSE = {
         "IS_DEVELOPER": UserProfile.objects.get(user=request.user).is_developer,
-        "AUTOMATIONS": Automation.objects.filter(author=request.user)[::-1]
+        "AUTOMATIONS": Automation.objects.filter(author=request.user)[::-1],
+        "AUTOMATIONS_count": len(Automation.objects.filter(author=request.user)),
     }
 
 

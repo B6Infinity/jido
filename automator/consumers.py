@@ -60,21 +60,19 @@ class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother 
     @database_sync_to_async
     def mark_online(self, user):
         u = UserProfile.objects.get(user=user)
-        print(u)
         u.online = True
         u.save()
 
     @database_sync_to_async
     def mark_offline(self, user):
         u = UserProfile.objects.get(user=user)
-        print(u)
         u.online = False
         u.save()
 
 
 
 
-    '''
+'''
 class ChatRoomConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
@@ -118,4 +116,8 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({'content_type': 'USER_MESSAGE', 'message': message, 'username': username}))
     
 
-    '''
+'''
+
+class NotificationsManager(AsyncWebsocketConsumer):
+    async def connect(self):
+        pass
