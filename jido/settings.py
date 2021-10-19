@@ -81,6 +81,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'jido.wsgi.application'
 ASGI_APPLICATION = 'jido.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

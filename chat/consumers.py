@@ -2,7 +2,7 @@ import json
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from automator.models import UserProfile
-
+'''
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     
     async def connect(self):
@@ -45,3 +45,4 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
         await self.send(text_data=json.dumps({'content_type': 'USER_MESSAGE', 'message': message, 'username': username}))
     
+'''
