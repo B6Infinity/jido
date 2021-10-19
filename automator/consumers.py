@@ -1,7 +1,7 @@
 import json
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from channels.layers import get_channel_layer
+# from channels.layers import get_channel_layer
 from .models import UserProfile
 
 class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother server
@@ -10,10 +10,11 @@ class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother 
         self.chatroom = 'MAIN_SERVER'
         self.chatroom_group_name = f'chat_{self.chatroom}'
 
-        print(self.channel_layer)
 
         await self.channel_layer.group_add(self.chatroom_group_name, self.channel_name)
+
         await self.accept()
+
         await self.channel_layer.group_send(self.chatroom_group_name,
             {
                 'type': 'connected_to_server_message',

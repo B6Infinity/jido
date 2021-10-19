@@ -33,7 +33,8 @@
             <div id="sendmessage_hud">
 
                 <div style="color: #FFDD34;" id="send_msg" class="fas fa-laugh sendmessage_hud_icon"></div>
-                <textarea placeholder="Type your message here..." name="sendmessage_textarea" id="sendmessage_textarea"></textarea>
+                <textarea placeholder="Type your message here..." name="sendmessage_textarea"
+                    id="sendmessage_textarea"></textarea>
                 <div id="send_msg" class="fas fa-paper-plane sendmessage_hud_icon"></div>
 
             </div>
@@ -44,7 +45,7 @@
     </div>
 
 
-    
+
     <script>
         let csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 
@@ -133,6 +134,15 @@
         // SOckets and stuff
         const ws_url = 'ws/connect_to_server/';
         const serverSocket = new WebSocket(`ws://${window.location.host}/${ws_url}`);
+
+        serverSocket.onopen = function (e) {
+            console.log("Connection established");
+        };
+
+        serverSocket.onmessage = (e) => {
+            const SOCKETDATA = JSON.parse(e.data);
+            console.log(SOCKETDATA);
+        }
 
     </script>
 
