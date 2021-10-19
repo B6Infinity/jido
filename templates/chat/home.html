@@ -131,18 +131,9 @@
         }
 
 
-        // SOckets and stuff
-        const ws_url = 'ws/connect_to_server/';
-        const serverSocket = new WebSocket(`ws://${window.location.host}/${ws_url}`);
-
-        serverSocket.onopen = function (e) {
-            console.log("Connection established");
-        };
-
-        serverSocket.onmessage = (e) => {
-            const SOCKETDATA = JSON.parse(e.data);
-            console.log(SOCKETDATA);
-        }
+        // Messaging Sockets and stuff
+        
+        
 
     </script>
 

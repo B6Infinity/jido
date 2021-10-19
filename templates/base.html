@@ -57,7 +57,7 @@
                 </div>
                 <div class="navigationmenu_item">
                     <div class="navigationmenu_item_img">
-                        <img src="https://img.icons8.com/material-rounded/48/ffffff/appointment-reminders.png"/>
+                        <img src="https://img.icons8.com/material-rounded/48/ffffff/appointment-reminders.png" />
                     </div>
                 </div>
                 <div class="navigationmenu_item" id="userProfile" onclick="window.location.href = '/login';">
@@ -184,5 +184,29 @@
 </body>
 {% block postdoc_script %}{% endblock postdoc_script %}
 
+<!-- MOTHER SOCKET -->
+<script>
+
+    const serverSocket = new WebSocket(`ws://${window.location.host}/ws/connect_to_server/`);
+
+    serverSocket.onopen = function (e) {
+        console.log("Connection established");
+    };
+
+    serverSocket.onmessage = (e) => {
+        const SOCKETDATA = JSON.parse(e.data);
+        console.log(SOCKETDATA);
+    }
+
+    serverSocket.onclose = function (event) {
+        if (event.wasClean) {
+            console.warn(`Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        } else {
+            // e.g. server process killed or network down
+            // event.code is usually 1006 in this case
+            console.warn('[close] Connection died');
+        }
+    };
+</script>
 
 </html>

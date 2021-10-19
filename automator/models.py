@@ -33,6 +33,7 @@ class UserProfile(models.Model):
 
     profilePic_url = models.TextField(default="https://rpgplanner.com/wp-content/uploads/2020/06/no-photo-available.png", blank=True)
 
+    online = models.BooleanField(default=False)
 
 
     def save(self, *args, **kwargs):
