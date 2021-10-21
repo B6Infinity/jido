@@ -2,6 +2,31 @@ import json
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from automator.models import UserProfile
+
+class ChatManager(AsyncWebsocketConsumer):
+
+    # async def connect(self):
+    #     self.chatroom = self.scope['url_route']['kwargs']['chatroom']
+    #     self.chatroom_group_name = 'chat_%s' % self.chatroom
+        
+    #     await self.channel_layer.group_add(self.chatroom_group_name, self.channel_name)
+    #     await self.accept()
+    #     await self.channel_layer.group_send(self.chatroom_group_name,
+    #         {
+    #             'type': 'chatroom_joined_message',
+    #             'username': str(self.scope['user'])
+    #         }
+    #     )
+
+    async def disconnect(self, code):
+        pass
+
+    async def receive(self, text_data): # async def receive(self, text_data=None, bytes_data=None):
+        pass
+
+
+
+
 '''
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     
