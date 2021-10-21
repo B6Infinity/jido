@@ -4,7 +4,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import UserProfile
 
-class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother server
+class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Server
     async def connect(self):
         if not self.scope['user'].is_authenticated:
             return None
@@ -38,6 +38,71 @@ class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother 
 
         await self.mark_offline(self.scope['user'])
 
+    async def receive(self, text_data): # async def receive(self, text_data=None, bytes_data=None):
+
+        '''
+        BASE FORMAT OF SOCKET JSON 'MESSAGE'
+        {
+            "__TYPE__": <'CHAT_MESSAGE'/...>,
+            "CONTENT": {
+
+                # For 'CHAT_MESSAGE' ----------------------
+
+                "CHAT_ID": 45,
+                "MESSAGE": {
+                    "TEXT": 'watcha doin mate?'
+                }
+
+                # For ...            ----------------------
+
+                ...
+
+
+            },
+        }
+
+        '''
+
+        text_data_json = json.loads(text_data)
+        message = text_data_json['MESSAGE']
+        user = self.scope['user']
+
+        if message['__TYPE__'] == 'CHAT_MESSAGE':
+            content = message['CONTENT']
+
+            chat_id = content['CHAT_ID']
+            message = content['MESSAGE']
+            
+            message_text = message['TEXT']
+
+            
+
+
+
+
+
+        print(message)
+        print(user)
+        
+        # await self.channel_layer.group_send(self.chatroom_group_name, {'type': 'chat_message', 'message': message, 'username': user})
+
+
+    '''
+    async def chat_message(self, event):
+        message = event['message']
+        username = event['username']
+
+        await self.send(text_data=json.dumps({'content_type': 'USER_MESSAGE', 'message': message, 'username': username}))
+    '''
+
+
+
+
+
+
+
+
+
 
 
     # MADE UP
@@ -47,8 +112,6 @@ class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother 
     async def connected_to_server_message(self, event):
         user = event['user']
         await self.send(text_data=json.dumps({'content_type': 'USER_CONNECT_TO_SERVER', 'username': user.username}))
-
-
 
     async def disconnected_to_server_message(self, event):
         user = event['user']
@@ -68,6 +131,9 @@ class ConnectToServer(AsyncWebsocketConsumer): # Primitive Connection to Mother 
         u = UserProfile.objects.get(user=user)
         u.online = False
         u.save()
+
+
+
 
 
 
@@ -118,6 +184,6 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
 '''
 
-class NotificationsManager(AsyncWebsocketConsumer):
-    async def connect(self):
-        pass
+# class NotificationsManager(AsyncWebsocketConsumer):
+#     async def connect(self):
+#         pass

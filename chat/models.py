@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class Chat(models.Model):
     participants = models.ManyToManyField(User, related_name="chats")
+
     is_group_chat = models.BooleanField(default=False)
     title = models.CharField(max_length=150, blank=True)
 
@@ -35,10 +36,11 @@ class Chat(models.Model):
 
 class Message(models.Model):
     message = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='messages')
-    time_sent = models.DateTimeField(auto_now_add=True)
-    
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages')
+    
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='messages')
+
+    time_sent = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.message} ---[{self.author} > {self.chat}]'
