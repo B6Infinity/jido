@@ -1,2 +1,2 @@
-automator/__pycache__
-jido/__pycache__
+*.pyc
+*.pyo
