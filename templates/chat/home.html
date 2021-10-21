@@ -34,8 +34,10 @@
 
                 <div style="color: #FFDD34;" id="send_msg" class="fas fa-laugh sendmessage_hud_icon"></div>
                 <textarea placeholder="Type your message here..." name="sendmessage_textarea"
-                    id="sendmessage_textarea"></textarea>
-                <div id="send_msg" class="fas fa-paper-plane sendmessage_hud_icon"></div>
+                    id="sendmessage_textarea" disabled onkeypress="if (event.keyCode == 13){event.preventDefault(); sendChatMessage(); }"></textarea>
+                <div id="send_msg" onclick="sendChatMessage()" class="fas fa-paper-plane sendmessage_hud_icon"></div>
+                
+                <input type="hidden" id="chat_id" value="">
 
             </div>
         </div>
@@ -49,6 +51,8 @@
     <script>
         let csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
 
+        let active_chat_id = null;
+
         function setActiveChat(chat_id) {
             try {
                 document.getElementsByClassName('active_chat_head')[0].classList.remove('active_chat_head');
@@ -56,8 +60,12 @@
             document.getElementById('chat-' + chat_id).classList.add('active_chat_head');
 
             fetchMessages(chat_id);
-        }
+            active_chat_id = chat_id;
 
+            document.getElementById('sendmessage_textarea').disabled = false;
+
+        }
+//      |
         function fetchMessages(chat_id) {
 
             let form = new FormData(); // Add Data to be sent to this 'form'
@@ -82,9 +90,9 @@
 
                 });
         }
-
+//      |
         function pasteMessages(MESSAGES) {
-
+            
             let chatHTML = ``;
 
             for (let message in MESSAGES) {
@@ -131,6 +139,28 @@
         }
 
 
+        function sendChatMessage() {
+            let text = document.getElementById('sendmessage_textarea').value;
+            if (text.trim().length == 0){
+                return null;
+            }
+
+
+            let WS_CHAT_JSON = {
+                "__TYPE__": 'CHAT_MESSAGE',
+                "CONTENT": {
+                    "CHAT_ID": 9000,
+                    "MESSAGE": {
+                        "TEXT": text
+                    }
+                }
+            }
+
+            console.log(WS_CHAT_JSON);
+
+            serverSocket.send(JSON.stringify({"__MESSAGE__": WS_CHAT_JSON}));
+        }
+
         // Messaging Sockets and stuff
         let sampleWSJSON = {
             "__TYPE__": 'CHAT_MESSAGE',
@@ -141,7 +171,7 @@
                 }
             },
         }
-        
+
 
     </script>
 

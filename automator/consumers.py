@@ -2,7 +2,9 @@ import json
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
+import time, math
 from .models import UserProfile
+from chat.models import Chat, Message
 
 class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Server
     async def connect(self):
@@ -39,10 +41,10 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
         await self.mark_offline(self.scope['user'])
 
     async def receive(self, text_data): # async def receive(self, text_data=None, bytes_data=None):
-
         '''
         BASE FORMAT OF SOCKET JSON 'MESSAGE'
-        {
+        {   
+            "__ID__": int(math.modf(time.time() * 1000)[1]),
             "__TYPE__": <'CHAT_MESSAGE'/...>,
             "CONTENT": {
 
@@ -64,24 +66,25 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
         '''
 
         text_data_json = json.loads(text_data)
-        message = text_data_json['MESSAGE']
+        CLIENT_MESSAGE = text_data_json['__MESSAGE__']
+        CLIENT_MESSAGE_ID = text_data_json['__ID__']
         user = self.scope['user']
 
-        if message['__TYPE__'] == 'CHAT_MESSAGE':
-            content = message['CONTENT']
+        if CLIENT_MESSAGE['__TYPE__'] == 'CHAT_MESSAGE':
+            content = CLIENT_MESSAGE['CONTENT']
 
             chat_id = content['CHAT_ID']
             message = content['MESSAGE']
             
             message_text = message['TEXT']
 
+            # Manipulate DB
+            await self.addmessage2chat(chat_id, message_text, user) # Created Message
+
             
 
 
-
-
-
-        print(message)
+        print(CLIENT_MESSAGE)
         print(user)
         
         # await self.channel_layer.group_send(self.chatroom_group_name, {'type': 'chat_message', 'message': message, 'username': user})
@@ -94,15 +97,6 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
 
         await self.send(text_data=json.dumps({'content_type': 'USER_MESSAGE', 'message': message, 'username': username}))
     '''
-
-
-
-
-
-
-
-
-
 
 
     # MADE UP
@@ -133,6 +127,12 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
         u.save()
 
 
+    @database_sync_to_async
+    def addmessage2chat(self, chat_id, message_text, author):
+        chat = Chat.objects.get(id=chat_id)
+        Message.objects.create(message=message_text, chat=chat, author=author)
+
+        
 
 
 
