@@ -20,7 +20,7 @@
 
 
         <div id="active-chat" class="flex-column">
-            <div style="height: 100%;">
+            <div id="chat-display" style="height: 90%;">
 
                 <div id="active-chat-header">
 
@@ -97,7 +97,7 @@
 
             for (let message in MESSAGES) {
                 let msg = MESSAGES[message];
-                console.log(msg);
+                // console.log(msg);
 
                 // Vars
                 let oorin = 'outer';
@@ -131,13 +131,14 @@
 
             document.getElementById('messages').innerHTML = chatHTML;
 
-            let active_chat = document.getElementById("active-chat");
+            let active_chat = document.getElementById("messages");
             active_chat.scrollTop = active_chat.scrollHeight;
 
 
 
         }
 
+        let CHAT_SOCKET_IDS = [];
 
         function sendChatMessage() {
             let text = document.getElementById('sendmessage_textarea').value;
@@ -145,11 +146,15 @@
                 return null;
             }
 
+            const CHATSOCKET_ID = String(Date.now());
 
-            let WS_CHAT_JSON = {
+            CHAT_SOCKET_IDS.concat(CHATSOCKET_ID);
+
+            const WS_CHAT_JSON = {
+                "__ID__": String(Date.now()),
                 "__TYPE__": 'CHAT_MESSAGE',
                 "CONTENT": {
-                    "CHAT_ID": 9000,
+                    "CHAT_ID": active_chat_id,
                     "MESSAGE": {
                         "TEXT": text
                     }
@@ -159,7 +164,23 @@
             console.log(WS_CHAT_JSON);
 
             serverSocket.send(JSON.stringify({"__MESSAGE__": WS_CHAT_JSON}));
+
+
         }
+
+        function friskChatMessageSocket(data){
+            const SOCKETMSG_ID = data.__ID__;
+            console.log()
+
+            if (CHAT_SOCKET_IDS.includes(SOCKETMSG_ID)){
+                CHAT_SOCKET_IDS.splice(CHAT_SOCKET_IDS.indexOf(SOCKETMSG_ID),1); // Deletes the ID -- Since Response regarding the message has come back from the server
+
+
+                console.log(data.CONTENT);
+            }
+
+        }
+
 
         // Messaging Sockets and stuff
         let sampleWSJSON = {

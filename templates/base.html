@@ -189,6 +189,10 @@
 
     let serverSocket = null;
 
+    const SOCKETFRISKER_FUNCS = {
+        "CHAT_MESSAGE_STATUS": friskChatMessageSocket,
+    }
+
     function connectToMotherServer_ws() {
         
         serverSocket = new WebSocket(`ws://${window.location.host}/ws/connect_to_server/`);
@@ -196,10 +200,17 @@
         serverSocket.onopen = function (e) {
             console.log("Connection established");
         };
-
+        
         serverSocket.onmessage = (e) => {
             const SOCKETDATA = JSON.parse(e.data);
+
+            
+            // Pass down the data according to the FUNCTION tree
+            SOCKETFRISKER_FUNCS[SOCKETDATA["__TYPE__"]](SOCKETDATA);
+            
+            
             console.log(SOCKETDATA);
+
         }
 
         serverSocket.onclose = function (event) {
@@ -216,7 +227,6 @@
                     connectToMotherServer_ws();
                 }, 1000);
             }
-
 
         };
 

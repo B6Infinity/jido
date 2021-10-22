@@ -41,18 +41,27 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
         await self.mark_offline(self.scope['user'])
 
     async def receive(self, text_data): # async def receive(self, text_data=None, bytes_data=None):
+        
         '''
         BASE FORMAT OF SOCKET JSON 'MESSAGE'
         {   
             "__ID__": int(math.modf(time.time() * 1000)[1]),
-            "__TYPE__": <'CHAT_MESSAGE'/...>,
+            "__TYPE__": <'CHAT_MESSAGE'/'CHAT_MESSAGE_STATUS'/...>,
             "CONTENT": {
 
                 # For 'CHAT_MESSAGE' ----------------------
 
                 "CHAT_ID": 45,
                 "MESSAGE": {
-                    "TEXT": 'watcha doin mate?'
+                    "TEXT": 'watcha doin mate?',
+                }
+
+                # For 'CHAT_MESSAGE_STATUS' ----------------------(SERVER - Response)
+
+                "CHAT_ID": 45,
+                "MESSAGE": {
+                    "SUCCESS": True, # or False
+                    "ERRORS": [],
                 }
 
                 # For ...            ----------------------
@@ -67,7 +76,7 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
 
         text_data_json = json.loads(text_data)
         CLIENT_MESSAGE = text_data_json['__MESSAGE__']
-        CLIENT_MESSAGE_ID = text_data_json['__ID__']
+        CLIENT_MESSAGE_ID = CLIENT_MESSAGE['__ID__']
         user = self.scope['user']
 
         if CLIENT_MESSAGE['__TYPE__'] == 'CHAT_MESSAGE':
@@ -79,13 +88,41 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
             message_text = message['TEXT']
 
             # Manipulate DB
-            await self.addmessage2chat(chat_id, message_text, user) # Created Message
-
             
+            SUCCESS = True
+            
+            s = await self.addmessage2chat(chat_id, message_text, user) # Created Message
+
+            if not s[1]:
+                SUCCESS = False
+
+            RESPONSE_JSON = {   
+                "__ID__": CLIENT_MESSAGE_ID,
+                "__TYPE__": 'CHAT_MESSAGE_STATUS',
+                "CONTENT": {
+
+                    "MESSAGE_ID": s[0],
+                    "MESSAGE": {
+                        "SUCCESS": SUCCESS,
+                        "ERRORS": s[2],
+                }
 
 
-        print(CLIENT_MESSAGE)
-        print(user)
+                },
+            }
+
+            # SEND RESPONSE to SENDER
+            await self.send(text_data=json.dumps(RESPONSE_JSON))
+
+            if SUCCESS:
+                pass # Send that down the chat group
+
+
+
+
+
+        # print(CLIENT_MESSAGE)
+        # print(user)
         
         # await self.channel_layer.group_send(self.chatroom_group_name, {'type': 'chat_message', 'message': message, 'username': user})
 
@@ -129,9 +166,13 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
 
     @database_sync_to_async
     def addmessage2chat(self, chat_id, message_text, author):
-        chat = Chat.objects.get(id=chat_id)
-        Message.objects.create(message=message_text, chat=chat, author=author)
-
+        try:
+            chat = Chat.objects.get(id=chat_id)
+            Message.objects.create(message=message_text, chat=chat, author=author)
+            return (chat.id, True, []) #Success or Now
+        except Exception:
+            return (None, False, [str(Exception)]) #Success or Now
+            
         
 
 
