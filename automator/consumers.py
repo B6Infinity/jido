@@ -54,6 +54,7 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
                 "CHAT_ID": 45,
                 "MESSAGE": {
                     "TEXT": 'watcha doin mate?',
+                    "AUTHOR": <username>,
                 }
 
                 # For 'CHAT_MESSAGE_STATUS' ----------------------(SERVER - Response)
@@ -103,6 +104,8 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
 
                     "MESSAGE_ID": s[0],
                     "MESSAGE": {
+                        "AUTHOR": self.scope['user'].username,
+                        "TIME_SENT": s[3],
                         "SUCCESS": SUCCESS,
                         "ERRORS": s[2],
                 }
@@ -168,10 +171,10 @@ class MotherServer(AsyncWebsocketConsumer): # Primitive Connection to Mother Ser
     def addmessage2chat(self, chat_id, message_text, author):
         try:
             chat = Chat.objects.get(id=chat_id)
-            Message.objects.create(message=message_text, chat=chat, author=author)
-            return (chat.id, True, []) #Success or Now
+            msg = Message.objects.create(message=message_text, chat=chat, author=author)
+            return (chat.id, True, [], msg.time_sent.strftime("%H:%m %d.%m.%y")) # (chat id, success or not, errors, message time_sent)
         except Exception:
-            return (None, False, [str(Exception)]) #Success or Now
+            return (None, False, [str(Exception)], None) #Success or Now
             
         
 

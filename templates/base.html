@@ -206,8 +206,11 @@
 
             
             // Pass down the data according to the FUNCTION tree
-            SOCKETFRISKER_FUNCS[SOCKETDATA["__TYPE__"]](SOCKETDATA);
+            // SOCKETFRISKER_FUNCS[SOCKETDATA["__TYPE__"]](SOCKETDATA);
             
+            try{
+                SOCKETFRISKER_FUNCS[SOCKETDATA["__TYPE__"]](SOCKETDATA);
+            }catch(e){console.log(e)};
             
             console.log(SOCKETDATA);
 

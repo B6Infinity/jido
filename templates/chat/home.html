@@ -33,10 +33,11 @@
             <div id="sendmessage_hud">
 
                 <div style="color: #FFDD34;" id="send_msg" class="fas fa-laugh sendmessage_hud_icon"></div>
-                <textarea placeholder="Type your message here..." name="sendmessage_textarea"
-                    id="sendmessage_textarea" disabled onkeypress="if (event.keyCode == 13){event.preventDefault(); sendChatMessage(); }"></textarea>
+                <textarea placeholder="Type your message here..." name="sendmessage_textarea" id="sendmessage_textarea"
+                    disabled
+                    onkeypress="if (event.keyCode == 13){event.preventDefault(); sendChatMessage(); }"></textarea>
                 <div id="send_msg" onclick="sendChatMessage()" class="fas fa-paper-plane sendmessage_hud_icon"></div>
-                
+
                 <input type="hidden" id="chat_id" value="">
 
             </div>
@@ -65,7 +66,7 @@
             document.getElementById('sendmessage_textarea').disabled = false;
 
         }
-//      |
+        //      |
         function fetchMessages(chat_id) {
 
             let form = new FormData(); // Add Data to be sent to this 'form'
@@ -90,9 +91,9 @@
 
                 });
         }
-//      |
+        //      |
         function pasteMessages(MESSAGES) {
-            
+
             let chatHTML = ``;
 
             for (let message in MESSAGES) {
@@ -138,60 +139,107 @@
 
         }
 
+        function pasteMessage(MESSAGE) {
+
+
+            let oorin = 'outer';
+            if (MESSAGE.AUTHOR == '{{user}}') oorin = 'inner';
+
+            let H = `
+                <div class="message-wrapper">
+                    <div class="message-author ${oorin}_message-author ">
+                        <img src="http://127.0.0.1:8000/username_profilepic-${MESSAGE.AUTHOR}" alt="">
+                    </div>
+                    <div class="message ${oorin}_message" id="${MESSAGE.ID}">
+                        <div class="message-text">
+                            ${MESSAGE.TEXT}
+                        </div>
+
+                        <div class="message-sent-time" id="message-sent-time-${MESSAGE.ID}">
+                            ${MESSAGE.TIME_SENT}
+                        </div>
+
+                    </div>
+                </div>
+                `;
+
+            if (active_chat_id == MESSAGE.CHAT_ID) {
+                document.getElementById('messages').innerHTML += H;
+
+                let active_chat = document.getElementById("messages");
+                active_chat.scrollTop = active_chat.scrollHeight;
+            }
+
+        }
+
         let CHAT_SOCKET_IDS = [];
+        let WS_CHAT_JSONS = {};
 
         function sendChatMessage() {
             let text = document.getElementById('sendmessage_textarea').value;
-            if (text.trim().length == 0){
+            if (text.trim().length == 0) {
                 return null;
             }
 
             const CHATSOCKET_ID = String(Date.now());
 
-            CHAT_SOCKET_IDS.concat(CHATSOCKET_ID);
+            CHAT_SOCKET_IDS.push(CHATSOCKET_ID);
+
+            let __ID__ = String(Date.now());
 
             const WS_CHAT_JSON = {
-                "__ID__": String(Date.now()),
+                "__ID__": __ID__,
+
                 "__TYPE__": 'CHAT_MESSAGE',
                 "CONTENT": {
                     "CHAT_ID": active_chat_id,
                     "MESSAGE": {
-                        "TEXT": text
+                        "TEXT": text,
+                    }
+                }
+
+            }
+
+            serverSocket.send(JSON.stringify({ "__MESSAGE__": WS_CHAT_JSON }));
+
+            WS_CHAT_JSONS[__ID__] = WS_CHAT_JSON;
+
+        }
+
+        function friskChatMessageSocket(data) {
+            const SOCKETMSG_ID = data.__ID__;
+
+            if (CHAT_SOCKET_IDS.includes(SOCKETMSG_ID)) {
+                CHAT_SOCKET_IDS.splice(CHAT_SOCKET_IDS.indexOf(SOCKETMSG_ID), 1); // Deletes the ID -- Since Response regarding the message has come back from the server
+
+
+                const CONTENT = data.CONTENT;
+
+                if (CONTENT.MESSAGE.SUCCESS) {
+
+                    let msg = WS_CHAT_JSONS[data.__ID__].CONTENT;
+                    // Adjust the JSON and pass it to the paster
+
+                    msg.TEXT = msg.MESSAGE.TEXT;
+                    msg.AUTHOR = CONTENT.MESSAGE.AUTHOR;
+                    msg.ID = CONTENT.MESSAGE_ID;
+                    msg.TIME_SENT = CONTENT.MESSAGE.TIME_SENT;
+
+                    console.log("MESSAGE JS:", msg);
+                    pasteMessage(msg);
+
+                }
+                else {
+                    for (let i = 0; i < CONTENT.MESSAGE.ERRORS.length; i++) {
+                        const error = CONTENT.MESSAGE.ERRORS[i];
+                        createAlertMessage('error', error);
                     }
                 }
             }
 
-            console.log(WS_CHAT_JSON);
-
-            serverSocket.send(JSON.stringify({"__MESSAGE__": WS_CHAT_JSON}));
-
-
-        }
-
-        function friskChatMessageSocket(data){
-            const SOCKETMSG_ID = data.__ID__;
-            console.log()
-
-            if (CHAT_SOCKET_IDS.includes(SOCKETMSG_ID)){
-                CHAT_SOCKET_IDS.splice(CHAT_SOCKET_IDS.indexOf(SOCKETMSG_ID),1); // Deletes the ID -- Since Response regarding the message has come back from the server
-
-
-                console.log(data.CONTENT);
-            }
-
         }
 
 
-        // Messaging Sockets and stuff
-        let sampleWSJSON = {
-            "__TYPE__": 'CHAT_MESSAGE',
-            "CONTENT": {
-                "CHAT_ID": 45,
-                "MESSAGE": {
-                    "TEXT": 'watcha doin mate?'
-                }
-            },
-        }
 
 
     </script>
