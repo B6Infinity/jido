@@ -110,7 +110,7 @@
                 let htmlsnippet = `
                 <div class="message-wrapper">
                     <div class="message-author ${oorin}_message-author ">
-                        <img src="http://127.0.0.1:8000/username_profilepic-${msg.AUTHOR}" alt="">
+                        <img src="${window.location.protocol}//${window.location.host}}/username_profilepic-${msg.AUTHOR}" alt="">
                     </div>
                     <div class="message ${oorin}_message" id="${msg.ID}">
                         <div class="message-text">
@@ -148,7 +148,7 @@
             let H = `
                 <div class="message-wrapper">
                     <div class="message-author ${oorin}_message-author ">
-                        <img src="http://127.0.0.1:8000/username_profilepic-${MESSAGE.AUTHOR}" alt="">
+                        <img src="${window.location.protocol}//${window.location.host}}/username_profilepic-${MESSAGE.AUTHOR}" alt="">
                     </div>
                     <div class="message ${oorin}_message" id="${MESSAGE.ID}">
                         <div class="message-text">
